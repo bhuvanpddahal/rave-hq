@@ -31,20 +31,20 @@ const NavButtons = ({
             {user && user.id ? (
                 <>
                     <Button
-                        variant="ghost"
+                        variant="outline"
                         onClick={() => signOut()}
                     >
                         Sign Out
                     </Button>
                     <Link href="/dashboard" className={cn(buttonVariants({
-                        variant: "default"
+                        variant: "secondary"
                     }))} onClick={closeSheet}>
                         Dashboard
                     </Link>
                 </>
             ) : (
                 <Link href="/signin" className={cn(buttonVariants({
-                    variant: "default"
+                    variant: "outline"
                 }))} onClick={closeSheet}>
                     Sign In
                 </Link>

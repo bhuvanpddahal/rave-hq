@@ -1,5 +1,5 @@
 export const metadata = {
-    title: "Dashboard - QuickCodeKit"
+    title: "Dashboard - RaveHQ"
 };
 
 const DashboardPage = () => {

@@ -13,14 +13,12 @@ export const Footer = () => {
                             className="flex items-center justify-center md:justify-start"
                         >
                             <Image
-                                src="logo.svg"
+                                src="/logo.svg"
                                 alt="Logo"
-                                height={48.88}
-                                width={40}
+                                height={50}
+                                width={188}
+                                className="h-[40px] w-auto"
                             />
-                            <span className="font-extrabold text-zinc-800 text-lg">
-                                QuickCodeKit
-                            </span>
                         </Link>
                         <p className="mt-3 text-sm text-slate-700">
                             QuickCodeKit is your one-stop shop for maximizing your coding efficiency and propelling your programming skills to new heights. Sign up for a free trial today and experience the difference!

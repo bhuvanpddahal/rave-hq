@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { Gabarito } from "next/font/google";
+import { Hanken_Grotesk } from "next/font/google";
 
 import "./globals.css";
 import Providers from "@/components/Providers";
 import { auth } from "@/auth";
 
-const gabarito = Gabarito({ subsets: ["latin"] });
+const gabarito = Hanken_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "QuickCodeKit",
     description: "Quickly setup your project with preconfigured assets",
     icons: {
-        icon: "/logo.svg"
+        icon: "/logo-icon.svg"
     }
 };
 

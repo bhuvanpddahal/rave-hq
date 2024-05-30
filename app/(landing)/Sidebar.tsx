@@ -28,14 +28,12 @@ const Sidebar = () => {
                         onClick={() => setOpen(false)}
                     >
                         <Image
-                            src="logo.svg"
+                            src="/logo.svg"
                             alt="Logo"
-                            height={48.88}
-                            width={40}
+                            height={50}
+                            width={188}
+                            className="h-[40px] w-auto"
                         />
-                        <span className="font-extrabold text-zinc-800 text-lg">
-                            QuickCodeKit
-                        </span>
                     </Link>
 
                     <NavItems

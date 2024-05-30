@@ -29,21 +29,19 @@ const Navbar = () => {
     }, []);
 
     return (
-        <nav ref={navRef} className="pl-2 pr-4 py-3 bg-primary-foreground">
+        <nav ref={navRef} className="px-4 py-3 bg-background">
             <div className="relative max-w-7xl w-full mx-auto flex items-center justify-between">
                 <Link
                     href="/"
                     className="flex items-center justify-center"
                 >
                     <Image
-                        src="logo.svg"
+                        src="/logo.svg"
                         alt="Logo"
-                        height={48.88}
-                        width={40}
+                        height={50}
+                        width={188}
+                        className="h-[40px] w-auto"
                     />
-                    <span className="font-extrabold text-zinc-800 text-lg">
-                        QuickCodeKit
-                    </span>
                 </Link>
 
                 <NavItems className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden lg:flex gap-x-16" />

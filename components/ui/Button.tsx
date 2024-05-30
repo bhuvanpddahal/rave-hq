@@ -4,19 +4,14 @@ import { Loader2 } from 'lucide-react'
 import * as React from 'react'
 
 const buttonVariants = cva(
-  "active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none disabled:opacity-50 disabled:pointer-events-none",
+  "active:scale-95 inline-flex items-center justify-center bg-gradient-to-b rounded-sm text-sm font-medium border transition-colors shadow-sm focus:outline-none disabled:opacity-50 disabled:pointer-events-none",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        primary: "from-primary/60 to-primary text-primary-foreground hover:bg-zinc-600/80 border-red-600",
+        secondary: "from-secondary/60 to-secondary text-secondary-foreground hover:bg-zinc-500/80 border-blue-600",
+        destructive: "from-destructive/60 to-destructive text-destructive-foreground hover:bg-zinc-500/80 border-red-600",
+        outline: "from-background/60 to-zinc-100 border-input hover:bg-zinc-500/30 hover:text-accent-foreground"
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -26,7 +21,7 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: 'default',
+      variant: 'primary',
       size: 'default',
     },
   }
@@ -46,7 +41,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={isLoading}
         {...props}>
-        {isLoading ? <Loader2 className='mr-2 h-4 w-4 animate-spin' /> : null}
+        {isLoading ? <Loader2 className='mr-2 h-4 w-4 stroke-1 animate-spin' /> : null}
         {children}
       </button>
     )

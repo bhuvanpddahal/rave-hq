@@ -15,7 +15,7 @@ const FormSuccess = ({
 
     return (
         <div className={cn(
-            "w-full bg-emerald-500/15 px-3 py-2 rounded-md flex items-center gap-x-2 text-sm text-emerald-500 max-w-4xl",
+            "w-full bg-emerald-500/15 px-3 py-2 rounded-sm flex items-center gap-x-2 text-sm text-emerald-500 max-w-4xl",
             className
         )}>
             <CheckCircle className="h-4 w-4 flex-shrink-0" />

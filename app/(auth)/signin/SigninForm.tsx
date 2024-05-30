@@ -113,6 +113,7 @@ const LogInForm = () => {
 
                 <Button
                     type="submit"
+                    variant="secondary"
                     className="w-full"
                     disabled={isLoading}
                     isLoading={isLoading}

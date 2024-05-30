@@ -88,6 +88,7 @@ const VerificationForm = ({ userId }: VerificationFormProps) => {
             <div className="space-y-3">
                 <Button
                     className="w-full"
+                    variant="secondary"
                     onClick={handleConfirm}
                     disabled={isConfirmLoading || isResendLoading}
                     isLoading={isConfirmLoading}

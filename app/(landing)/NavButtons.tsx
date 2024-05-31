@@ -11,18 +11,18 @@ import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 interface NavButtonsProps {
     className?: string;
-    setOpen?: Dispatch<SetStateAction<boolean>>;
+    setIsOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 const NavButtons = ({
     className = "",
-    setOpen
+    setIsOpen
 }: NavButtonsProps) => {
     const user = useCurrentUser();
 
     const closeSheet = () => {
-        if (setOpen) {
-            setOpen(false);
+        if (setIsOpen) {
+            setIsOpen(false);
         }
     };
 

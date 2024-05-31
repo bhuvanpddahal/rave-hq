@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
     FcOrgUnit,
     FcSettings,
@@ -10,6 +11,10 @@ import {
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
+
+interface SidebarProps {
+    className?: string;
+}
 
 const dashboardLinks = [
     {
@@ -37,11 +42,25 @@ const profileLinks = [
     }
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ className }: SidebarProps) => {
     const pathname = usePathname();
 
     return (
-        <aside className="sticky top-[51px] w-[300px] h-[calc(100vh-51px)] overflow-y-auto border-r border-input px-5 py-7 space-y-6">
+        <aside className={cn(
+            "bg-white h-screen overflow-y-auto px-5 py-7 space-y-6",
+            className
+        )}>
+            <div>
+                <Link href="/">
+                    <Image
+                        src="/logo.svg"
+                        alt="Logo"
+                        height={50}
+                        width={188}
+                        className="h-[30px] w-auto"
+                    />
+                </Link>
+            </div>
             <div className="space-y-3">
                 <h3 className="text-xs font-bold text-zinc-500">
                     DASHBOARD
@@ -52,8 +71,10 @@ const Sidebar = () => {
                             <Link
                                 href={link.href}
                                 className={cn(
-                                    "flex items-center gap-2 px-3 py-2 font-medium hover:bg-slate-100 rounded-sm text-sm",
-                                    pathname.includes(link.href) && "bg-primary-foreground hover:bg-primary-foreground"
+                                    "flex items-center gap-2 px-3 py-2 font-medium rounded-sm text-sm transition-colors",
+                                    pathname.includes(link.href)
+                                        ? "bg-gradient-to-b from-secondary/60 to-secondary text-secondary-foreground hover:bg-zinc-500/80"
+                                        : "hover:bg-slate-100"
                                 )}
                             >
                                 <link.icon className="h-6 w-6" />
@@ -73,8 +94,10 @@ const Sidebar = () => {
                             <Link
                                 href={link.href}
                                 className={cn(
-                                    "flex items-center gap-2 px-3 py-2 font-medium hover:bg-slate-100 rounded-sm text-sm",
-                                    pathname.includes(link.href) && "bg-primary-foreground hover:bg-primary-foreground"
+                                    "flex items-center gap-2 px-3 py-2 font-medium rounded-sm text-sm transition-colors",
+                                    pathname.includes(link.href)
+                                        ? "bg-gradient-to-b from-secondary/60 to-secondary text-secondary-foreground hover:bg-zinc-500/80"
+                                        : "hover:bg-slate-100"
                                 )}
                             >
                                 <link.icon className="h-6 w-6" />

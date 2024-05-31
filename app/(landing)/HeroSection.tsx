@@ -6,7 +6,7 @@ import { buttonVariants } from "@/components/ui/Button";
 
 const HeroSection = () => {
     return (
-        <section className="bg-primary-foreground">
+        <section className="bg-background">
             <div className="relative max-w-5xl mx-auto flex flex-col items-center justify-center gap-16 lg:gap-20 px-8 py-12 lg:py-32">
                 <div className="relative flex flex-col gap-10 lg:gap-12 items-center justify-center text-center">
                     <div className="space-y-2">

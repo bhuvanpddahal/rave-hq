@@ -29,7 +29,7 @@ const Navbar = () => {
     }, []);
 
     return (
-        <nav ref={navRef} className="px-4 py-3 bg-background">
+        <nav ref={navRef} className="px-4 py-3 bg-white">
             <div className="relative max-w-7xl w-full mx-auto flex items-center justify-between">
                 <Link href="/">
                     <Image

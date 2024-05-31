@@ -37,6 +37,7 @@ model User {
     updatedAt     DateTime  @updatedAt
 
     account Account?
+    apps    App[]
 }
 
 model VerificationToken {
@@ -44,4 +45,32 @@ model VerificationToken {
     email     String   @unique
     token     String
     expiresAt DateTime
+}
+
+model App {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId    String   @db.ObjectId
+    hashedKey String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    testimonials Testimonial[]
+
+    @@index(fields: [userId])
+}
+
+model Testimonial {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    appId     String   @unique @db.ObjectId
+    feedback  String
+    rating    Int
+    email     String
+    givenAt   DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    app App @relation(fields: [appId], references: [id], onDelete: Cascade)
+
+    @@unique([appId, email])
 }

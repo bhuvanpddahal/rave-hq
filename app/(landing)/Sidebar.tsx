@@ -13,10 +13,10 @@ import {
 import { Separator } from "@/components/ui/Separator";
 
 const Sidebar = () => {
-    const [open, setOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <Sheet open={open} onOpenChange={setOpen}>
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger className="p-2.5 -mr-2.5 rounded-full transition-colors hover:bg-primary/10 lg:hidden outline-none">
                 <AlignJustify className="text-zinc-900 h-5 w-5" />
             </SheetTrigger>
@@ -25,7 +25,7 @@ const Sidebar = () => {
                     <Link
                         href="/"
                         className="flex items-center [state=open]:"
-                        onClick={() => setOpen(false)}
+                        onClick={() => setIsOpen(false)}
                     >
                         <Image
                             src="/logo.svg"
@@ -38,14 +38,14 @@ const Sidebar = () => {
 
                     <NavItems
                         className="mt-6 py-4 flex flex-col gap-y-4"
-                        setOpen={setOpen}
+                        setIsOpen={setIsOpen}
                     />
 
                     <Separator className="my-4" />
 
                     <NavButtons
                         className="flex flex-col gap-y-4"
-                        setOpen={setOpen}
+                        setIsOpen={setIsOpen}
                     />
                 </div>
             </SheetContent>

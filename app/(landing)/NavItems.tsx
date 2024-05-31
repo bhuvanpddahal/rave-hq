@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 
 interface NavItemsProps {
     className?: string;
-    setOpen?: Dispatch<SetStateAction<boolean>>;
+    setIsOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 const navItems = [
@@ -19,11 +19,11 @@ const navItems = [
 
 const NavItems = ({
     className = "",
-    setOpen
+    setIsOpen
 }: NavItemsProps) => {
     const closeSheet = () => {
-        if (setOpen) {
-            setOpen(false);
+        if (setIsOpen) {
+            setIsOpen(false);
         }
     };
 

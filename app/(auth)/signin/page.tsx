@@ -11,7 +11,7 @@ export const metadata = {
 const SigninPage = () => {
     return (
         <div className="min-h-screen w-full bg-muted flex items-center justify-center px-2 py-4">
-            <div className="bg-white max-w-sm w-full px-6 pt-6 pb-8 sm:px-8 sm:pt-8 sm:pb-9 rounded-sm shadow-sm">
+            <div className="bg-white max-w-sm w-full px-6 py-8 sm:px-8 sm:py-9 rounded-sm shadow-sm">
                 <div className="flex items-center justify-center">
                     <Image
                         src="/logo.svg"

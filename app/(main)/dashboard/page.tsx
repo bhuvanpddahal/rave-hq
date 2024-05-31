@@ -1,15 +1,17 @@
-export const metadata = {
-    title: "Dashboard - RaveHQ"
-};
-
 const DashboardPage = () => {
     return (
-        <div className="h-screen w-screen bg-muted flex items-center justify-center">
-            <p className="text-center max-w-sm w-full">
-                This is the protected page that is only available to the authenticated users.
-            </p>
+        <div className="h-screen px-5 py-7">
+            Dashboard
         </div>
     )
 };
 
 export default DashboardPage;
+
+// Overview
+//  - Total testimonials collected
+//  - Recent Testimonials
+//  - Net Promoter Score (NPS) overall customer satisfaction
+// Testimonials
+// Apps
+// Settings

@@ -120,6 +120,7 @@ export const verifyEmail = async (payload: VerifyEmailPayload) => {
             redirectTo: DEFAULT_LOGIN_REDIRECT
         });
     } catch (error) {
+        console.error(error);
         if (error instanceof AuthError) {
             switch (error.type) {
                 case "CredentialsSignin":
@@ -150,6 +151,7 @@ export const resendToken = async (payload: ResendTokenPayload) => {
 
         return { success: "Token resended successfully" };
     } catch (error) {
+        console.error(error);
         throw new Error("Something went wrong");
     }
 };
@@ -167,6 +169,7 @@ export const getUserEmail = async (payload: GetUserEmailPayload) => {
 
         return { email: user.email, emailVerified: user.emailVerified };
     } catch (error) {
+        console.error(error);
         return { error: "Something went wrong" };
     }
 };

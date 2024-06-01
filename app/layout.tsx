@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Hanken_Grotesk } from "next/font/google";
 
 import "./globals.css";
+import Modals from "@/components/Modals";
 import Providers from "@/components/Providers";
 import { auth } from "@/auth";
+import { Toaster } from "@/components/ui/Toaster";
 
 const gabarito = Hanken_Grotesk({ subsets: ["latin"] });
 
@@ -26,6 +28,8 @@ export default async function RootLayout({
         <html lang="en">
             <body className={gabarito.className}>
                 <Providers session={session}>
+                    <Modals />
+                    <Toaster />
                     {children}
                 </Providers>
             </body>

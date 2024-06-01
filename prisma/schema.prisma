@@ -49,8 +49,9 @@ model VerificationToken {
 
 model App {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    name      String
     userId    String   @db.ObjectId
-    hashedKey String   @unique
+    hashedKey String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
@@ -58,6 +59,7 @@ model App {
 
     testimonials Testimonial[]
 
+    @@unique([userId, name])
     @@index(fields: [userId])
 }
 

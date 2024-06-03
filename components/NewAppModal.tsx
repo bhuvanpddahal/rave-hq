@@ -24,7 +24,6 @@ const NewAppModal = () => {
 
     const onSubmit = (payload: CreateAppPayload) => {
         startTransition(() => {
-            console.log("Payload:", payload);
             createApp(payload).then((data) => {
                 if (data.success) {
                     toast({
@@ -55,7 +54,7 @@ const NewAppModal = () => {
                 <DialogHeader>
                     <DialogTitle>Create a new app</DialogTitle>
                     <DialogDescription>
-                        Fill in the form below to create a new app in your account.
+                        Fill in the form below to create a new app in your account. Make sure you haven&apos;t created an app with the same name.
                     </DialogDescription>
                 </DialogHeader>
                 <AppForm

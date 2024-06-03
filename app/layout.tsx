@@ -7,11 +7,11 @@ import Providers from "@/components/Providers";
 import { auth } from "@/auth";
 import { Toaster } from "@/components/ui/Toaster";
 
-const gabarito = Hanken_Grotesk({ subsets: ["latin"] });
+const hankenGrotesk = Hanken_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "QuickCodeKit",
-    description: "Quickly setup your project with preconfigured assets",
+    title: "RaveHQ",
+    description: "Introducing the testimonial collection and management platform",
     icons: {
         icon: "/logo-icon.svg"
     }
@@ -26,7 +26,7 @@ export default async function RootLayout({
 
     return (
         <html lang="en">
-            <body className={gabarito.className}>
+            <body className={hankenGrotesk.className}>
                 <Providers session={session}>
                     <Modals />
                     <Toaster />

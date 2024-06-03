@@ -8,4 +8,14 @@ export const CreateAppValidator = z.object({
     })
 });
 
+export const CheckApiKeyValidator = z.object({
+    appId: z.string()
+});
+
+export const CreateApiKeyValidator = z.object({
+    appId: z.string()
+});
+
 export type CreateAppPayload = z.infer<typeof CreateAppValidator>;
+export type CheckApiKeyPayload = z.infer<typeof CheckApiKeyValidator>;
+export type CreateApiKeyPayload = z.infer<typeof CreateApiKeyValidator>;

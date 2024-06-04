@@ -10,7 +10,9 @@ import {
     CreateApiKeyPayload,
     CreateApiKeyValidator,
     CreateAppPayload,
-    CreateAppValidator
+    CreateAppValidator,
+    CreateTestimonialPayload,
+    CreateTestimonialValidator
 } from "@/lib/validators/app";
 import { generateApiKey } from "@/lib/api-key";
 
@@ -110,6 +112,72 @@ export const createAndSaveApiKey = async (payload: CreateApiKeyPayload) => {
         });
 
         return { success: "New api key created", apiKey };
+    } catch (error) {
+        console.error(error);
+        throw new Error("Something went wrong");
+    }
+};
+
+export const getApps = async () => {
+    try {
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const apps = await db.app.findMany({
+            where: {
+                userId: session.user.id
+            },
+            select: {
+                id: true,
+                name: true
+            }
+        });
+
+        return { apps };
+    } catch (error) {
+        console.error(error);
+        return { error: "Something went wrong" };
+    }
+};
+
+export const createTestimonial = async (payload: CreateTestimonialPayload) => {
+    try {
+        const validatedFields = CreateTestimonialValidator.safeParse(payload);
+        if (!validatedFields.success) return { error: "Invalid fields" };
+
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const { appId, feedback, rating, email } = validatedFields.data;
+
+        const existingApp = await db.app.findUnique({
+            where: {
+                id: appId
+            }
+        });
+        if (!existingApp) return { error: "App not found" };
+        if (existingApp.userId !== session.user.id) return { error: "Not allowed" };
+
+        const existingTestimonialWithSameEmail = await db.testimonial.findUnique({
+            where: {
+                appId_email: {
+                    appId,
+                    email
+                }
+            }
+        });
+        if (existingTestimonialWithSameEmail) return { error: "Testimonial with that email already exists" };
+
+        await db.testimonial.create({
+            data: {
+                appId,
+                feedback,
+                rating,
+                email
+            }
+        });
+
+        return { success: "New testimonial created" };
     } catch (error) {
         console.error(error);
         throw new Error("Something went wrong");

@@ -16,6 +16,24 @@ export const CreateApiKeyValidator = z.object({
     appId: z.string()
 });
 
+export const CreateTestimonialValidator = z.object({
+    appId: z.string(),
+    feedback: z.string().min(20, {
+        message: "Feedback must be at least 20 characters long"
+    }).max(300, {
+        message: "Feedback must be at most 300 characters long"
+    }),
+    rating: z.number().min(0, {
+        message: "Rating must be greater or equal to 0"
+    }).max(5, {
+        message: "Rating must be smaller or equal to 5"
+    }),
+    email: z.string().email({
+        message: "Email is invalid"
+    })
+});
+
 export type CreateAppPayload = z.infer<typeof CreateAppValidator>;
 export type CheckApiKeyPayload = z.infer<typeof CheckApiKeyValidator>;
 export type CreateApiKeyPayload = z.infer<typeof CreateApiKeyValidator>;
+export type CreateTestimonialPayload = z.infer<typeof CreateTestimonialValidator>;

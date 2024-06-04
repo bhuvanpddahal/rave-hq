@@ -1,7 +1,11 @@
 "use client";
 
+import {
+    useMutation,
+    useQuery,
+    useQueryClient
+} from "@tanstack/react-query";
 import { Key } from "lucide-react";
-import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { useToast } from "@/hooks/useToast";
 import { Button } from "@/components/ui/Button";
@@ -14,6 +18,7 @@ interface CreateApiKeyButtonProps {
 
 const CreateApiKeyButton = ({ appId }: CreateApiKeyButtonProps) => {
     const { toast } = useToast();
+    const queryClient = useQueryClient();
     const { open, setApiKey } = useApiKeyModal();
 
     const {
@@ -39,6 +44,9 @@ const CreateApiKeyButton = ({ appId }: CreateApiKeyButtonProps) => {
         },
         onSuccess: (data) => {
             if (data.success) {
+                queryClient.invalidateQueries({
+                    queryKey: ["apps", appId, "api-key"]
+                });
                 setApiKey(data.apiKey);
                 open();
             }

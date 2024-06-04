@@ -11,7 +11,8 @@ const buttonVariants = cva(
         primary: "from-primary/60 to-primary text-primary-foreground hover:bg-zinc-600/80 border-red-600",
         secondary: "from-secondary/60 to-secondary text-secondary-foreground hover:bg-zinc-500/80 border-blue-600",
         destructive: "from-destructive/60 to-destructive text-destructive-foreground hover:bg-zinc-500/80 border-red-600",
-        outline: "from-background/60 to-zinc-100 border-input hover:bg-zinc-500/30 hover:text-accent-foreground"
+        outline: "from-background/60 to-zinc-100 border-input hover:bg-zinc-500/30 hover:text-accent-foreground",
+        ghost: "border-0 shadow-none hover:bg-accent hover:text-accent-foreground hover:shadow-sm"
       },
       size: {
         default: "h-10 px-4 py-2",

@@ -1,8 +1,5 @@
 "use client";
 
-import { useTransition } from "react";
-import { useRouter } from "next/navigation";
-
 import AppForm from "./AppForm";
 import {
     Dialog,
@@ -11,42 +8,12 @@ import {
     DialogHeader,
     DialogTitle
 } from "./ui/Dialog";
-import { createApp } from "@/actions/app";
-import { useToast } from "@/hooks/useToast";
+import { useCreateApp } from "@/hooks/useCreateApp";
 import { useNewAppModal } from "@/hooks/useNewAppModal";
-import { CreateAppPayload } from "@/lib/validators/app";
 
 const NewAppModal = () => {
-    const router = useRouter();
-    const { toast } = useToast();
     const { isOpen, close } = useNewAppModal();
-    const [isLoading, startTransition] = useTransition();
-
-    const onSubmit = (payload: CreateAppPayload) => {
-        startTransition(() => {
-            createApp(payload).then((data) => {
-                if (data.success) {
-                    toast({
-                        title: "Success",
-                        description: data.success
-                    });
-                    router.push(`/apps/${data.appId}`);
-                    close();
-                }
-                if (data.error) {
-                    toast({
-                        title: "Error",
-                        description: data.error
-                    });
-                }
-            }).catch(() => {
-                toast({
-                    title: "Error",
-                    description: "Something went wrong"
-                });
-            });
-        });
-    };
+    const { isLoading, onSubmit } = useCreateApp();
 
     return (
         <Dialog open={isOpen} onOpenChange={close}>
@@ -69,4 +36,4 @@ const NewAppModal = () => {
     )
 };
 
-export default NewAppModal
+export default NewAppModal;

@@ -12,7 +12,9 @@ import {
     CreateAppPayload,
     CreateAppValidator,
     CreateTestimonialPayload,
-    CreateTestimonialValidator
+    CreateTestimonialValidator,
+    GetTestimonialsPayload,
+    GetTestimonialsValidator
 } from "@/lib/validators/app";
 import { generateApiKey } from "@/lib/api-key";
 
@@ -181,5 +183,62 @@ export const createTestimonial = async (payload: CreateTestimonialPayload) => {
     } catch (error) {
         console.error(error);
         throw new Error("Something went wrong");
+    }
+};
+
+export const getTestimonials = async (payload: GetTestimonialsPayload) => {
+    try {
+        const validatedFields = GetTestimonialsValidator.safeParse(payload);
+        if (!validatedFields.success) return { error: "Invalid fields" };
+
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const { page, limit } = validatedFields.data;
+
+        const testimonials = await db.testimonial.findMany({
+            where: {
+                app: {
+                    userId: session.user.id
+                }
+            },
+            orderBy: {
+                givenAt: "desc"
+            },
+            take: limit,
+            skip: (page - 1) * limit,
+            include: {
+                app: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        });
+
+        const polishedTestimonials = testimonials.map((testimonial) => ({
+            id: testimonial.id,
+            appId: testimonial.appId,
+            feedback: testimonial.feedback,
+            rating: testimonial.rating,
+            email: testimonial.email,
+            givenAt: testimonial.givenAt,
+            updatedAt: testimonial.updatedAt,
+            appName: testimonial.app.name
+        }));
+
+        const totalTestimonials = await db.testimonial.count({
+            where: {
+                app: {
+                    userId: session.user.id
+                }
+            }
+        });
+        const hasNextPage = totalTestimonials > (page * limit);
+
+        return { testimonials: polishedTestimonials, totalTestimonials, hasNextPage };
+    } catch (error) {
+        console.error(error);
+        return { error: "Something went wrong" };
     }
 };

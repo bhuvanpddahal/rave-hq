@@ -33,7 +33,13 @@ export const CreateTestimonialValidator = z.object({
     })
 });
 
+export const GetTestimonialsValidator = z.object({
+    page: z.number(),
+    limit: z.number()
+});
+
 export type CreateAppPayload = z.infer<typeof CreateAppValidator>;
 export type CheckApiKeyPayload = z.infer<typeof CheckApiKeyValidator>;
 export type CreateApiKeyPayload = z.infer<typeof CreateApiKeyValidator>;
 export type CreateTestimonialPayload = z.infer<typeof CreateTestimonialValidator>;
+export type GetTestimonialsPayload = z.infer<typeof GetTestimonialsValidator>;

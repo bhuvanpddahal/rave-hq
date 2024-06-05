@@ -6,6 +6,10 @@ import {
 
 import { Button } from "@/components/ui/Button";
 
+export const metadata = {
+    title: "Overview - RaveHQ"
+};
+
 const DashboardPage = () => {
     return (
         <div className="space-y-4">

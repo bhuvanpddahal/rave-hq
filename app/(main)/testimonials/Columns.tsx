@@ -5,6 +5,7 @@ import {
     MoreHorizontal,
     Star
 } from "lucide-react";
+import { format } from "date-fns";
 import { Testimonial } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -64,7 +65,7 @@ export const columns: ColumnDef<TestimonialType>[] = [
             const rating = testimonial.rating;
 
             return <div className="flex items-center justify-center gap-2">
-                <Star className="h-4 w-4 fill-orange-500" />
+                <Star className="h-4 w-4 fill-orange-500 stroke-1 stroke-red-600" />
                 {rating}
             </div>
         }
@@ -110,7 +111,7 @@ export const columns: ColumnDef<TestimonialType>[] = [
             const testimonial = row.original;
             const date = testimonial.givenAt;
 
-            return <div>{JSON.stringify(date)}</div>
+            return <div>{format(date, "P")}</div>
         }
     },
     {

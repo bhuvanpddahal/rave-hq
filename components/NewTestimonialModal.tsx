@@ -37,7 +37,7 @@ const NewTestimonialModal = () => {
                         description: data.success
                     });
                     queryClient.invalidateQueries({
-                        queryKey: [""] // TODO: Invalidate the query that fetches all the testimonials
+                        queryKey: ["testimonials"]
                     });
                     close();
                 }

@@ -1,5 +1,9 @@
 import NewAppButton from "../NewAppButton";
 
+export const metadata = {
+    title: "Apps - RaveHQ"
+};
+
 const AppsPage = () => {
     return (
         <div className="space-y-4">

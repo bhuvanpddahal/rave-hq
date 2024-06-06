@@ -1,3 +1,5 @@
+import Image from "next/image";
+import AppsList from "./AppsList";
 import NewAppButton from "../NewAppButton";
 
 export const metadata = {
@@ -6,8 +8,15 @@ export const metadata = {
 
 const AppsPage = () => {
     return (
-        <div className="space-y-4">
-            <div className="p-6 pb-24 rounded-sm bg-gradient-to-b from-primary to-primary/60 space-y-3 space-y-3">
+        <div className="mt-[60px] space-y-6">
+            <div className="relative p-6 pt-4 pr-[220px] rounded-sm bg-gradient-to-b from-primary to-primary/60 space-y-2">
+                <Image
+                    src="/review-apps.svg"
+                    alt="Review apps"
+                    width={773}
+                    height={612}
+                    className="absolute bottom-0 right-0 h-[130px] sm:h-[160px] w-auto"
+                />
                 <h2 className="font-bold text-xl text-primary-foreground">
                     Review your Apps
                 </h2>
@@ -16,6 +25,7 @@ const AppsPage = () => {
                 </p>
                 <NewAppButton />
             </div>
+            <AppsList />
         </div>
     )
 };

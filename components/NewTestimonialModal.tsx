@@ -30,7 +30,6 @@ const NewTestimonialModal = () => {
     const onSubmit = (payload: CreateTestimonialPayload) => {
         startTransition(() => {
             createTestimonial(payload).then((data) => {
-                console.log("Payload:", payload);
                 if (data.success) {
                     toast({
                         title: "Success",

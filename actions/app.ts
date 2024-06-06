@@ -1,6 +1,7 @@
 "use server";
 
 import bcrypt from "bcryptjs";
+import { isSameDay, subDays } from "date-fns";
 
 import { db } from "@/lib/db";
 import { auth } from "@/auth";
@@ -17,6 +18,7 @@ import {
     GetTestimonialsValidator
 } from "@/lib/validators/app";
 import { generateApiKey } from "@/lib/api-key";
+import { fillMissingDays } from "@/lib/utils";
 
 export const createApp = async (payload: CreateAppPayload) => {
     try {
@@ -120,7 +122,7 @@ export const createAndSaveApiKey = async (payload: CreateApiKeyPayload) => {
     }
 };
 
-export const getApps = async () => {
+export const getAppsForTestimonialCreation = async () => {
     try {
         const session = await auth();
         if (!session?.user || !session.user.id) return { error: "Unauthorized" };
@@ -237,6 +239,107 @@ export const getTestimonials = async (payload: GetTestimonialsPayload) => {
         const hasNextPage = totalTestimonials > (page * limit);
 
         return { testimonials: polishedTestimonials, totalTestimonials, hasNextPage };
+    } catch (error) {
+        console.error(error);
+        return { error: "Something went wrong" };
+    }
+};
+
+type ChartData = {
+    date: Date;
+    overallRating: number;
+    count: number;
+}[];
+
+export const getApps = async (page: number, limit: number) => {
+    try {
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const apps = await db.app.findMany({
+            where: {
+                userId: session.user.id
+            },
+            orderBy: {
+                createdAt: "desc"
+            },
+            take: limit,
+            skip: (page - 1) * limit,
+            include: {
+                testimonials: {
+                    orderBy: {
+                        givenAt: "asc"
+                    },
+                    select: {
+                        id: true,
+                        rating: true,
+                        givenAt: true
+                    }
+                }
+            }
+        });
+
+        const currentDate = new Date();
+        const startDate = subDays(currentDate, 10);
+
+        const polishedApps = apps.map((app) => {
+            let chartData: ChartData = [];
+
+            const totalRating = app.testimonials.reduce((acc, testimonial, index) => {
+                if (
+                    testimonial.givenAt >= startDate &&
+                    testimonial.givenAt <= currentDate
+                ) {
+                    const lastElement = chartData[chartData.length - 1];
+
+                    if (
+                        chartData.length &&
+                        isSameDay(lastElement.date, testimonial.givenAt)
+                    ) {
+                        chartData[chartData.length - 1] = {
+                            ...lastElement,
+                            overallRating: (acc + testimonial.rating) / (index + 1),
+                            count: lastElement.count + 1
+                        };
+                    } else {
+                        chartData.push({
+                            date: testimonial.givenAt,
+                            overallRating: (acc + testimonial.rating) / (index + 1),
+                            count: 1
+                        });
+                    }
+                }
+                return acc + testimonial.rating;
+            }, 0);
+            const overallRating = totalRating / app.testimonials.length;
+
+            const filledChartData = fillMissingDays(
+                chartData,
+                startDate,
+                currentDate
+            );
+
+            return {
+                id: app.id,
+                name: app.name,
+                userId: app.userId,
+                hashedKey: app.hashedKey,
+                createdAt: app.createdAt,
+                updatedAt: app.updatedAt,
+                testimonialsCount: app.testimonials.length,
+                overallRating,
+                chartData: filledChartData
+            };
+        });
+
+        const totalApps = await db.app.count({
+            where: {
+                userId: session.user.id
+            }
+        });
+        const hasNextPage = totalApps > (page * limit);
+
+        return { apps: polishedApps, totalApps, hasNextPage };
     } catch (error) {
         console.error(error);
         return { error: "Something went wrong" };

@@ -1,6 +1,41 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from "clsx";
+import { eachDayOfInterval, isSameDay } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+    return twMerge(clsx(inputs))
+}
+
+export function fillMissingDays(
+    chartData: {
+        date: Date,
+        overallRating: number,
+        count: number
+    }[],
+    startDate: Date,
+    endDate: Date
+) {
+    const allDays = eachDayOfInterval({
+        start: startDate,
+        end: endDate
+    });
+
+    let prevOverallRating = 0;
+
+    const dataPerDay = allDays.map((day, index) => {
+        const found = chartData.find((d) => isSameDay(d.date, day));
+
+        if (found) {
+            prevOverallRating = found.overallRating;
+            return found;
+        } else {
+            return {
+                date: day,
+                overallRating: prevOverallRating,
+                count: 0
+            };
+        }
+    });
+
+    return dataPerDay;
 }

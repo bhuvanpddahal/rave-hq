@@ -12,7 +12,7 @@ export const metadata = {
 
 const DashboardPage = () => {
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 mt-6">
             <div className="p-6 pb-24 rounded-sm bg-gradient-to-b from-primary to-primary/60">
                 <h2 className="font-bold text-xl text-primary-foreground">
                     Welcome to Overview

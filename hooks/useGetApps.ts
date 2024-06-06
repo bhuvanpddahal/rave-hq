@@ -1,5 +1,6 @@
-import { getApps } from "@/actions/app";
 import { useQuery } from "@tanstack/react-query";
+
+import { getAppsForTestimonialCreation } from "@/actions/app";
 
 export const useGetApps = () => {
     const {
@@ -8,7 +9,7 @@ export const useGetApps = () => {
     } = useQuery({
         queryKey: ["get-apps"],
         queryFn: async () => {
-            const data = await getApps();
+            const data = await getAppsForTestimonialCreation();
             return data;
         }
     });

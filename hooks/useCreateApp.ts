@@ -28,6 +28,9 @@ export const useCreateApp = (props?: useCreateAppProps) => {
                         description: data.success
                     });
                     queryClient.invalidateQueries({
+                        queryKey: ["apps"]
+                    });
+                    queryClient.invalidateQueries({
                         queryKey: ["get-apps"]
                     });
                     if (pushToNewAppUrl) {

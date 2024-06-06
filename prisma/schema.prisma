@@ -65,7 +65,7 @@ model App {
 
 model Testimonial {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    appId     String   @unique @db.ObjectId
+    appId     String   @db.ObjectId
     feedback  String
     rating    Int
     email     String

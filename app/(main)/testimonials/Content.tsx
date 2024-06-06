@@ -35,7 +35,7 @@ const TestimonialsContent = () => {
             });
             return {
                 testimonials: [] as TestimonialType[],
-                totalItems: 0,
+                totalTestimonials: 0,
                 hasNextPage: false
             };
         }

@@ -1,4 +1,4 @@
-import CreateApiKeyButton from "./CreateApiKeyButton";
+import AppDetailsContent from "./Content";
 
 interface AppDetailsPageProps {
     params: {
@@ -6,13 +6,15 @@ interface AppDetailsPageProps {
     };
 }
 
+export const metadata = {
+    title: "App Details - RaveHQ"
+};
+
 const AppDetailsPage = ({
     params: { appId }
 }: AppDetailsPageProps) => {
     return (
-        <div>
-            <CreateApiKeyButton appId={appId} />
-        </div>
+        <AppDetailsContent appId={appId} />
     )
 };
 

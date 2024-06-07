@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { App } from "@prisma/client";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
@@ -20,6 +22,7 @@ import { APPS_PER_PAGE } from "@/constants";
 import { Input } from "@/components/ui/Input";
 import { CountUp } from "@/components/CountUp";
 import { Button } from "@/components/ui/Button";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 interface FetchAppsProps {
     pageParam: number;
@@ -96,7 +99,11 @@ const AppsList = () => {
                 />
             </div>
             {!apps && isLoading && (
-                <div>Loading...</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {Array.from({ length: 4 }, (_, index) => (
+                        <AppLoader key={index} />
+                    ))}
+                </div>
             )}
             {apps && (
                 apps.length > 0 ? (
@@ -110,7 +117,7 @@ const AppsList = () => {
                                         key={app.id}
                                         ref={
                                             index === apps.length - 1 && !filter.length
-                                            ? ref : undefined
+                                                ? ref : undefined
                                         }
                                     >
                                         <CardHeader className="flex-row items-center justify-between">
@@ -162,16 +169,23 @@ const AppsList = () => {
                             return null;
                         })}
                         {isFetchingNextPage && (
-                            Array.from({ length: 3 }, (_, index) => (
-                                <div>
-                                    Loading...
-                                </div>
+                            Array.from({ length: 2 }, (_, index) => (
+                                <AppLoader key={index} />
                             ))
                         )}
                     </ul>
                 ) : (
-                    <div>
-                        No app to show
+                    <div className="py-12 flex flex-col items-center gap-y-2">
+                        <Image
+                            src="/empty.svg"
+                            alt="Empty"
+                            width={773}
+                            height={612}
+                            className="h-[130px] sm:h-[160px] w-auto"
+                        />
+                        <p className="text-sm font-medium text-zinc-400">
+                            No apps found
+                        </p>
                     </div>
                 )
             )}
@@ -180,3 +194,23 @@ const AppsList = () => {
 };
 
 export default AppsList;
+
+const AppLoader = () => {
+    return (
+        <Card>
+            <CardHeader className="flex-row items-center justify-between">
+                <Skeleton className="h-8 w-40 rounded-sm" />
+                <Skeleton className="h-7 w-14 rounded-sm" />
+            </CardHeader>
+            <CardContent>
+                <div className="h-[240px] w-full flex items-center justify-center">
+                    <Loader2 className="h-5 w-5 text-slate-500 stroke-1 animate-spin" />
+                </div>
+            </CardContent>
+            <CardFooter className="justify-between">
+                <Skeleton className="h-12 w-20 rounded-sm" />
+                <Skeleton className="h-12 w-20 rounded-sm" />
+            </CardFooter>
+        </Card>
+    )
+};

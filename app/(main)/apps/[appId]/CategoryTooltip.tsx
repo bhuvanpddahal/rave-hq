@@ -3,13 +3,13 @@ import { Separator } from "@/components/ui/Separator";
 const CategoryTooltip = ({ active, payload }: any) => {
     if (!active) return null;
 
-    const name = payload[0].payload.name;
-    const value = payload[0].value;
+    const star = payload[0].payload.star;
+    const count = payload[0].payload.count;
 
     return (
         <div className="rounded-sm bg-white shadow-sm border overflow-hidden">
             <div className="text-sm p-2 px-3 bg-muted text-muted-foreground">
-                {name}
+                {star}
             </div>
             <Separator />
             <div className="p-2 px-3 space-y-1">
@@ -20,7 +20,7 @@ const CategoryTooltip = ({ active, payload }: any) => {
                             Testimonials
                         </p>
                         <p className="text-sm text-right font-medium">
-                            {value}
+                            {count}
                         </p>
                     </div>
                 </div>

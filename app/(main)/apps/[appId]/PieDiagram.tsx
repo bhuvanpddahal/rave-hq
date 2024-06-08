@@ -9,36 +9,16 @@ import {
 
 import CategoryTooltip from "./CategoryTooltip";
 
-const data = [
-    {
-        name: "5 Stars",
-        value: 19
-    },
-    {
-        name: "4 Stars",
-        value: 54
-    },
-    {
-        name: "3 Stars",
-        value: 65
-    },
-    {
-        name: "2 Stars",
-        value: 23
-    },
-    {
-        name: "1 Star",
-        value: 7
-    },
-    {
-        name: "0 Stars",
-        value: 1
-    }
-]
+interface PieDiagramProps {
+    data: {
+        star: string;
+        count: number;
+    }[];
+}
 
 const COLORS = ["#0062FF", "#12C6FF", "#FF647F", "#FF9354", "#8AF27E", "#8E63F2"];
 
-const PieDiagram = () => {
+const PieDiagram = ({ data }: PieDiagramProps) => {
     return (
         <ResponsiveContainer width="100%" height={300}>
             <PieChart>
@@ -61,10 +41,10 @@ const PieDiagram = () => {
                                         />
                                         <div className="space-x-1">
                                             <span className="text-sm text-muted-foreground">
-                                                {entry.value}
+                                                {entry.payload.payload.star}
                                             </span>
                                             <span className="text-sm">
-                                                {entry.payload.value}
+                                                {entry.payload.count}
                                             </span>
                                         </div>
                                     </li>
@@ -82,7 +62,7 @@ const PieDiagram = () => {
                     innerRadius={50}
                     paddingAngle={2}
                     fill="#8884d8"
-                    dataKey="value"
+                    dataKey="count"
                     labelLine={false}
                 >
                     {data.map((_entry, index) => (

@@ -1,3 +1,5 @@
+import { Loader2 } from "lucide-react";
+
 import Chart from "./Chart";
 import {
     Card,
@@ -7,8 +9,23 @@ import {
     CardTitle
 } from "@/components/ui/Card";
 import { CountUp } from "@/components/CountUp";
+import { Skeleton } from "@/components/ui/Skeleton";
 
-const ChartCard = () => {
+interface ChartCardProps {
+    testimonialsCount: number;
+    overallRating: number;
+    chartData: {
+        date: Date;
+        overallRating: number;
+        count: number;
+    }[];
+}
+
+const ChartCard = ({
+    testimonialsCount,
+    overallRating,
+    chartData
+}: ChartCardProps) => {
     return (
         <Card className="col-span-1 xl:col-span-4">
             <CardHeader className="flex-row items-center justify-between">
@@ -17,7 +34,7 @@ const ChartCard = () => {
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <Chart />
+                <Chart data={chartData} />
             </CardContent>
             <CardFooter className="justify-between">
                 <div className="flex flex-col items-center">
@@ -28,7 +45,7 @@ const ChartCard = () => {
                         <CountUp
                             preserveValue
                             start={0}
-                            end={10}
+                            end={testimonialsCount}
                         />
                     </p>
                 </div>
@@ -40,7 +57,7 @@ const ChartCard = () => {
                         <CountUp
                             preserveValue
                             start={0}
-                            end={3.5}
+                            end={overallRating}
                             decimals={2}
                             decimalPlaces={2}
                         />
@@ -52,3 +69,24 @@ const ChartCard = () => {
 };
 
 export default ChartCard;
+
+export const ChartCardLoader = () => {
+    return (
+        <Card className="col-span-1 xl:col-span-4">
+            <CardHeader className="flex-row items-center justify-between">
+                <CardTitle className="text-lg text-zinc-800">
+                    History
+                </CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="h-[240px] w-full flex items-center justify-center">
+                    <Loader2 className="h-5 w-5 text-slate-500 stroke-1 animate-spin" />
+                </div>
+            </CardContent>
+            <CardFooter className="justify-between">
+                <Skeleton className="h-12 w-20 rounded-sm" />
+                <Skeleton className="h-12 w-20 rounded-sm" />
+            </CardFooter>
+        </Card>
+    )
+};

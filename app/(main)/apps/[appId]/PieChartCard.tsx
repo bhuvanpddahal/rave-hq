@@ -1,3 +1,5 @@
+import { Loader2 } from "lucide-react";
+
 import PieDiagram from "./PieDiagram";
 import {
     Card,
@@ -6,7 +8,16 @@ import {
     CardTitle
 } from "@/components/ui/Card";
 
-const PieChartCard = () => {
+interface PieChartCardProps {
+    ratingCategories: {
+        star: string;
+        count: number;
+    }[];
+}
+
+const PieChartCard = ({
+    ratingCategories
+}: PieChartCardProps) => {
     return (
         <Card className="col-span-1 xl:col-span-2">
             <CardHeader className="flex-row items-center justify-between">
@@ -15,10 +26,27 @@ const PieChartCard = () => {
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <PieDiagram />
+                <PieDiagram data={ratingCategories} />
             </CardContent>
         </Card>
     )
 };
 
 export default PieChartCard;
+
+export const PieChartCardLoader = () => {
+    return (
+        <Card className="col-span-1 xl:col-span-2">
+            <CardHeader className="flex-row items-center justify-between">
+                <CardTitle className="text-lg text-zinc-800">
+                    Categories
+                </CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="h-[240px] w-full flex items-center justify-center">
+                    <Loader2 className="h-5 w-5 text-slate-500 stroke-1 animate-spin" />
+                </div>
+            </CardContent>
+        </Card>
+    )
+};

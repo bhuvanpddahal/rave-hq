@@ -10,40 +10,15 @@ import { format } from "date-fns";
 
 import CustomTooltip from "../CustomTooltip";
 
-const Chart = () => {
-    const data = [
-        {
-            date: new Date(),
-            overallRating: 4,
-            count: 3
-        },
-        {
-            date: new Date(),
-            overallRating: 3.5,
-            count: 4
-        },
-        {
-            date: new Date(),
-            overallRating: 3,
-            count: 7
-        },
-        {
-            date: new Date(),
-            overallRating: 3.5,
-            count: 5
-        },
-        {
-            date: new Date(),
-            overallRating: 4,
-            count: 4
-        },
-        {
-            date: new Date(),
-            overallRating: 4.2,
-            count: 7
-        },
-    ];
+interface ChartProps {
+    data: {
+        date: Date;
+        overallRating: number;
+        count: number;
+    }[];
+}
 
+const Chart = ({ data }: ChartProps) => {
     return (
         <ResponsiveContainer width="100%" height={240}>
             <AreaChart data={data}>

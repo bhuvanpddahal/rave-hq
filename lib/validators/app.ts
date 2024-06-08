@@ -8,10 +8,6 @@ export const CreateAppValidator = z.object({
     })
 });
 
-export const CheckApiKeyValidator = z.object({
-    appId: z.string()
-});
-
 export const CreateApiKeyValidator = z.object({
     appId: z.string()
 });
@@ -48,10 +44,30 @@ export const GetAppTestimonialsValidator = z.object({
     limit: z.number()
 });
 
+export const RecoverApiKeyValidator = z.object({
+    appId: z.string()
+});
+
+export const GetAppInfoValidator = z.object({
+    appId: z.string()
+});
+
+export const DeleteApiKeyForRecoveryValidator = z.object({
+    appId: z.string(),
+    token: z.string()
+});
+
+export const ResendApiKeyTokenValidator = z.object({
+    appId: z.string()
+});
+
 export type CreateAppPayload = z.infer<typeof CreateAppValidator>;
-export type CheckApiKeyPayload = z.infer<typeof CheckApiKeyValidator>;
 export type CreateApiKeyPayload = z.infer<typeof CreateApiKeyValidator>;
 export type CreateTestimonialPayload = z.infer<typeof CreateTestimonialValidator>;
 export type GetTestimonialsPayload = z.infer<typeof GetTestimonialsValidator>;
 export type GetAppPayload = z.infer<typeof GetAppValidator>;
 export type GetAppTestimonialsPayload = z.infer<typeof GetAppTestimonialsValidator>;
+export type RecoverApiKeyPayload = z.infer<typeof RecoverApiKeyValidator>;
+export type GetAppInfoPayload = z.infer<typeof GetAppInfoValidator>;
+export type DeleteApiKeyForRecoveryPayload = z.infer<typeof DeleteApiKeyForRecoveryValidator>;
+export type ResendApiKeyTokenPayload = z.infer<typeof ResendApiKeyTokenValidator>;

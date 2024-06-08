@@ -22,8 +22,8 @@ const Overview = ({
     ratingCategories
 }: OverviewProps) => {
     if (
-        !testimonialsCount ||
-        !overallRating ||
+        testimonialsCount === undefined ||
+        overallRating === undefined ||
         !chartData ||
         !ratingCategories
     ) return null;

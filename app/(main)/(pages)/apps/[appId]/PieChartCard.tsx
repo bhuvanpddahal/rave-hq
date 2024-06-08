@@ -26,7 +26,13 @@ const PieChartCard = ({
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <PieDiagram data={ratingCategories} />
+                {ratingCategories.length ? (
+                    <PieDiagram data={ratingCategories} />
+                ) : (
+                    <p className="h-[300px] flex items-center justify-center text-slate-400 text-sm font-medium">
+                        No ratings to display
+                    </p>
+                )}
             </CardContent>
         </Card>
     )

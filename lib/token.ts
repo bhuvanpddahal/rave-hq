@@ -3,6 +3,7 @@ import crypto from "crypto";
 import { db } from "./db";
 import { TOKEN_EXPIRY_TIME_IN_MIN } from "@/constants";
 import { getVerificationTokenByEmail } from "./queries/verification-token";
+import { getApiKeyRecoveryTokenByAppId } from "./queries/api-key-recovery-token";
 
 function generateCode() {
     // Generate a random string (longer to ensure enough numbers)
@@ -40,4 +41,26 @@ export const generateVerificationToken = async (email: string) => {
         }
     });
     return verificationToken;
+};
+
+export const generateApiKeyRecoveryToken = async (appId: string) => {
+    const expiresAt = new Date(
+        new Date().getTime() + TOKEN_EXPIRY_TIME_IN_MIN * 60 * 1000  // Calculate expiry date (in milliseconds)
+    );
+
+    const existingToken = await getApiKeyRecoveryTokenByAppId(appId);
+    if (existingToken) {
+        await db.apiKeyRecoveryToken.delete({
+            where: { id: existingToken.id }
+        });
+    }
+
+    const apiKeyRecoveryToken = await db.apiKeyRecoveryToken.create({
+        data: {
+            appId,
+            token: generateCode(),
+            expiresAt
+        }
+    });
+    return apiKeyRecoveryToken;
 };

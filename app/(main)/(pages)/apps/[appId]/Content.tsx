@@ -1,13 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 
+import ApiKeyHelpButton from "./ApiKeyHelpButton";
 import CreateApiKeyButton from "./CreateApiKeyButton";
 import Overview, { OverviewLoader } from "./Overview";
 import Testimonials, { TestimonialsLoader } from "./Testimonials";
 import { getApp } from "@/actions/app";
 import { Skeleton } from "@/components/ui/Skeleton";
-import Image from "next/image";
 
 interface AppDetailsContentProps {
     appId: string;
@@ -58,7 +59,11 @@ const AppDetailsContent = ({ appId }: AppDetailsContentProps) => {
                 <h1 className="font-bold text-xl text-zinc-800">
                     {data.name}
                 </h1>
-                <CreateApiKeyButton appId={appId} />
+                {data.hashedKey ? (
+                    <ApiKeyHelpButton appId={appId} />
+                ) : (
+                    <CreateApiKeyButton appId={appId} />
+                )}
             </div>
             <div className="space-y-6">
                 <Overview

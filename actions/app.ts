@@ -6,23 +6,32 @@ import { isSameDay, subDays } from "date-fns";
 import { db } from "@/lib/db";
 import { auth } from "@/auth";
 import {
-    CheckApiKeyPayload,
-    CheckApiKeyValidator,
     CreateApiKeyPayload,
     CreateApiKeyValidator,
     CreateAppPayload,
     CreateAppValidator,
     CreateTestimonialPayload,
     CreateTestimonialValidator,
+    DeleteApiKeyForRecoveryPayload,
+    DeleteApiKeyForRecoveryValidator,
+    GetAppInfoPayload,
+    GetAppInfoValidator,
     GetAppPayload,
     GetAppTestimonialsPayload,
     GetAppTestimonialsValidator,
     GetAppValidator,
     GetTestimonialsPayload,
-    GetTestimonialsValidator
+    GetTestimonialsValidator,
+    RecoverApiKeyPayload,
+    RecoverApiKeyValidator,
+    ResendApiKeyTokenPayload,
+    ResendApiKeyTokenValidator
 } from "@/lib/validators/app";
-import { generateApiKey } from "@/lib/api-key";
 import { fillMissingDays } from "@/lib/utils";
+import { generateApiKey } from "@/lib/api-key";
+import { sendApiKeyRecoveryEmail } from "@/lib/mail";
+import { generateApiKeyRecoveryToken } from "@/lib/token";
+import { getApiKeyRecoveryTokenByAppId } from "@/lib/queries/api-key-recovery-token";
 
 export const createApp = async (payload: CreateAppPayload) => {
     try {
@@ -55,32 +64,6 @@ export const createApp = async (payload: CreateAppPayload) => {
     } catch (error) {
         console.error(error);
         throw new Error("Something went wrong");
-    }
-};
-
-export const checkApiKey = async (payload: CheckApiKeyPayload) => {
-    try {
-        const validatedFields = CheckApiKeyValidator.safeParse(payload);
-        if (!validatedFields.success) return { error: "Invalid fields" };
-
-        const session = await auth();
-        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
-
-        const { appId } = validatedFields.data;
-
-        const existingApp = await db.app.findUnique({
-            where: {
-                id: appId
-            }
-        });
-        if (!existingApp) return { error: "App not found" };
-        if (existingApp.userId !== session.user.id) return { error: "Unpermitted" };
-
-        if (!existingApp.hashedKey) return { hasApiKey: false };
-        return { hasApiKey: true };
-    } catch (error) {
-        console.error(error);
-        return { error: "Something went wrong" };
     }
 };
 
@@ -517,5 +500,160 @@ export const getAppTestimonials = async (payload: GetAppTestimonialsPayload) => 
     } catch (error) {
         console.error(error);
         return { error: "Something went wrong" };
+    }
+};
+
+export const recoverApiKey = async (payload: RecoverApiKeyPayload) => {
+    try {
+        const validatedFields = RecoverApiKeyValidator.safeParse(payload);
+        if (!validatedFields.success) return { error: "Invalid fields" };
+
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const { appId } = validatedFields.data;
+
+        const app = await db.app.findUnique({
+            where: {
+                id: appId
+            },
+            select: {
+                userId: true,
+                user: {
+                    select: {
+                        email: true
+                    }
+                }
+            }
+        });
+        if (!app) return { error: "App not found" };
+        if (app.userId !== session.user.id) return { error: "Not allowed" };
+
+        const apiKeyRecoveryToken = await generateApiKeyRecoveryToken(appId);
+        await sendApiKeyRecoveryEmail(app.user.email, apiKeyRecoveryToken.token);
+
+        return { success: "API key recovery email sent" };
+    } catch (error) {
+        console.error(error);
+        return { error: "Something went wrong" };
+    }
+};
+
+export const getAppInfo = async (payload: GetAppInfoPayload) => {
+    try {
+        const validatedFields = GetAppInfoValidator.safeParse(payload);
+        if (!validatedFields.success) return { error: "Invalid fields" };
+
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const { appId } = validatedFields.data;
+        
+        const app = await db.app.findUnique({
+            where: {
+                id: appId
+            },
+            select: {
+                userId: true,
+                user: {
+                    select: {
+                        email: true
+                    }
+                }
+            }
+        });
+        if (!app) return { error: "App not found" };
+        if (app.userId !== session.user.id) return { error: "Not allowed" };
+
+        return { email: app.user.email };
+    } catch (error) {
+        console.error(error);
+        return { error: "Something went wrong" };
+    }
+};
+
+export const deleteApiKeyForRecovery = async (payload: DeleteApiKeyForRecoveryPayload) => {
+    try {
+        const validatedFields = DeleteApiKeyForRecoveryValidator.safeParse(payload);
+        if (!validatedFields.success) return { error: "Invalid fields" };
+
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const { appId, token } = validatedFields.data;
+        
+        const app = await db.app.findUnique({
+            where: {
+                id: appId
+            }
+        });
+        if (!app) return { error: "App not found" };
+        if (app.userId !== session.user.id) return { error: "Not allowed" };
+
+        const apiKeyRecoveryToken = await getApiKeyRecoveryTokenByAppId(appId);
+        if (!apiKeyRecoveryToken) return { error: "Token not found" };
+
+        if (token !== apiKeyRecoveryToken.token) {
+            return { error: "Token is not matching" };
+        }
+
+        const hasExpired = new Date(apiKeyRecoveryToken.expiresAt) < new Date();
+        if (hasExpired) return { error: "Token has expired" };
+
+        await db.apiKeyRecoveryToken.delete({
+            where: {
+                id: apiKeyRecoveryToken.id
+            }
+        });
+
+        await db.app.update({
+            where: {
+                id: appId
+            },
+            data: {
+                hashedKey: null
+            }
+        });
+
+        return { success: "API key deleted from the app" };
+    } catch (error) {
+        console.error(error);
+        throw new Error("Something went wrong");
+    }
+};
+
+export const resendApiKeyToken = async (payload: ResendApiKeyTokenPayload) => {
+    try {
+        const validatedFields = ResendApiKeyTokenValidator.safeParse(payload);
+        if (!validatedFields.success) return { error: "Invalid fields" };
+
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const { appId } = validatedFields.data;
+
+        const app = await db.app.findUnique({
+            where: {
+                id: appId
+            },
+            select: {
+                userId: true,
+                user: {
+                    select: {
+                        email: true
+                    }
+                }
+            }
+        });
+        if (!app) return { error: "App not found" };
+        if (app.userId !== session.user.id) return { error: "Not allowed" };
+
+        const newApiKeyRecoveryToken = await generateApiKeyRecoveryToken(appId);
+        await sendApiKeyRecoveryEmail(app.user.email, newApiKeyRecoveryToken.token);
+
+        return { success: "Token resended successfully" };
+    } catch (error) {
+        console.error(error);
+        throw new Error("Something went wrong");
     }
 };

@@ -76,3 +76,10 @@ model Testimonial {
 
     @@unique([appId, email])
 }
+
+model ApiKeyRecoveryToken {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    appId     String   @unique
+    token     String
+    expiresAt DateTime
+}

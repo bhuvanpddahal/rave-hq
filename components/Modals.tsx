@@ -1,5 +1,6 @@
 import ApiKeyModal from "./ApiKeyModal";
 import NewAppModal from "./NewAppModal";
+import ApiKeyHelpModal from "./ApiKeyHelpModal";
 import NewTestimonialModal from "./NewTestimonialModal";
 
 const Modals = () => {
@@ -7,6 +8,7 @@ const Modals = () => {
         <>
             <NewAppModal />
             <ApiKeyModal />
+            <ApiKeyHelpModal />
             <NewTestimonialModal />
         </>
     )

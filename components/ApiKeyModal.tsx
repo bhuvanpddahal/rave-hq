@@ -32,7 +32,7 @@ const ApiKeyModal = () => {
     };
 
     return (
-        <Dialog open={isOpen} onOpenChange={close}>
+        <Dialog open={isOpen} onOpenChange={handleClose}>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Your API Key</DialogTitle>

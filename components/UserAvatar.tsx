@@ -9,14 +9,16 @@ import {
 interface UserAvatarProps {
     image: string | null;
     name: string | null;
+    className?: string;
 }
 
 const UserAvatar = ({
     image,
-    name
+    name,
+    className
 }: UserAvatarProps) => {
     return (
-        <Avatar>
+        <Avatar className={className}>
             <AvatarImage src={image || ""} />
             <AvatarFallback>
                 {name ? name[0] : (

@@ -78,7 +78,7 @@ const RecoverApiKeyContent = () => {
         <>
             <p className="text-zinc-500 text-center text-[13px] mb-4">
                 We have sent a code to
-                <span className="font-medium"> abc</span>,
+                <span className="font-medium"> {data.email}</span>,
                 please check your inbox and insert the code in form below to recover your API key.
             </p>
 

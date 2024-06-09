@@ -11,7 +11,7 @@ const hankenGrotesk = Hanken_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "RaveHQ",
-    description: "Introducing the testimonial collection and management platform",
+    description: "Introducing the ultimate testimonial collection and management platform",
     icons: {
         icon: "/logo-icon.svg"
     }

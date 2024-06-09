@@ -61,6 +61,10 @@ export const ResendApiKeyTokenValidator = z.object({
     appId: z.string()
 });
 
+export const GetTestimonialValidator = z.object({
+    testimonialId: z.string()
+});
+
 export type CreateAppPayload = z.infer<typeof CreateAppValidator>;
 export type CreateApiKeyPayload = z.infer<typeof CreateApiKeyValidator>;
 export type CreateTestimonialPayload = z.infer<typeof CreateTestimonialValidator>;
@@ -71,3 +75,4 @@ export type RecoverApiKeyPayload = z.infer<typeof RecoverApiKeyValidator>;
 export type GetAppInfoPayload = z.infer<typeof GetAppInfoValidator>;
 export type DeleteApiKeyForRecoveryPayload = z.infer<typeof DeleteApiKeyForRecoveryValidator>;
 export type ResendApiKeyTokenPayload = z.infer<typeof ResendApiKeyTokenValidator>;
+export type GetTestimonialPayload = z.infer<typeof GetTestimonialValidator>;

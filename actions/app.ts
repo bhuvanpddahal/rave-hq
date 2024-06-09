@@ -20,6 +20,8 @@ import {
     GetAppTestimonialsPayload,
     GetAppTestimonialsValidator,
     GetAppValidator,
+    GetTestimonialPayload,
+    GetTestimonialValidator,
     GetTestimonialsPayload,
     GetTestimonialsValidator,
     RecoverApiKeyPayload,
@@ -657,3 +659,44 @@ export const resendApiKeyToken = async (payload: ResendApiKeyTokenPayload) => {
         throw new Error("Something went wrong");
     }
 };
+
+export const getTestimonial = async (payload: GetTestimonialPayload) => {
+    try {
+        const validatedFields = GetTestimonialValidator.safeParse(payload);
+        if (!validatedFields.success) return { error: "Invalid fields" };
+
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const { testimonialId } = validatedFields.data;
+
+        const testimonial = await db.testimonial.findUnique({
+            where: {
+                id: testimonialId
+            },
+            include: {
+                app: {
+                    select: {
+                        name: true,
+                        userId: true
+                    }
+                }
+            }
+        });
+        if (!testimonial) return { error: "Testimonial not found" };
+        if (testimonial.app.userId !== session.user.id) return { error: "Not allowed" };
+
+        return {
+            appId: testimonial.appId,
+            appName: testimonial.app.name,
+            feedback: testimonial.feedback,
+            rating: testimonial.rating,
+            email: testimonial.email,
+            givenAt: testimonial.givenAt,
+            updatedAt: testimonial.updatedAt
+        };
+    } catch (error) {
+        console.error(error);
+        throw new Error("Something went wrong");
+    }
+}

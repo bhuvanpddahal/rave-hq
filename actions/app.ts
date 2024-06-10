@@ -6,6 +6,8 @@ import { isSameDay, subDays } from "date-fns";
 import { db } from "@/lib/db";
 import { auth } from "@/auth";
 import {
+    BulkDeleteTestimonialsPayload,
+    BulkDeleteTestimonialsValidator,
     CreateApiKeyPayload,
     CreateApiKeyValidator,
     CreateAppPayload,
@@ -699,4 +701,61 @@ export const getTestimonial = async (payload: GetTestimonialPayload) => {
         console.error(error);
         throw new Error("Something went wrong");
     }
-}
+};
+
+export const bulkDeleteTestimonials = async (payload: BulkDeleteTestimonialsPayload) => {
+    try {
+        const validatedFields = BulkDeleteTestimonialsValidator.safeParse(payload);
+        if (!validatedFields.success) return { error: "Invalid fields" };
+
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const { testimonialIds } = validatedFields.data;
+
+        let unpermitted = false;
+        let testimonialIdsToDelete: string[] = [];
+
+        for (let i = 0; i < testimonialIds.length; ++i) {
+            const testimonialId = testimonialIds[i];
+
+            const testimonial = await db.testimonial.findUnique({
+                where: {
+                    id: testimonialId
+                },
+                select: {
+                    app: {
+                        select: {
+                            userId: true
+                        }
+                    }
+                }
+            });
+
+            if (testimonial) {
+                if (testimonial.app.userId !== session.user.id) {
+                    unpermitted = true;
+                } else {
+                    testimonialIdsToDelete.push(testimonialId);
+                }
+            }
+        }
+
+        await db.testimonial.deleteMany({
+            where: {
+                id: {
+                    in: testimonialIdsToDelete
+                }
+            }
+        });
+
+        const successMessage = unpermitted
+            ? "Testimonial(s) with provided permissions deleted, others you are not allowed to delete"
+            : "Testimonial(s) deleted";
+
+        return { success: successMessage };
+    } catch (error) {
+        console.error(error);
+        throw new Error("Something went wrong");
+    }
+};

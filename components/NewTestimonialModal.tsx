@@ -59,7 +59,7 @@ const NewTestimonialModal = () => {
         <Dialog open={isOpen} onOpenChange={close}>
             <DialogContent className="overflow-y-auto"> {/*TODO: Make it scrollable in y-axis */}
                 <DialogHeader>
-                    <DialogTitle>New testimonial</DialogTitle>
+                    <DialogTitle>New Testimonial</DialogTitle>
                     <DialogDescription>
                         Fill in the form below to create a new testimonial in your account. You can create a testimonial in an existing app, or create a new one.
                     </DialogDescription>

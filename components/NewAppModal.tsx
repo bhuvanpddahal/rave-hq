@@ -19,7 +19,7 @@ const NewAppModal = () => {
         <Dialog open={isOpen} onOpenChange={close}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>New app</DialogTitle>
+                    <DialogTitle>New App</DialogTitle>
                     <DialogDescription>
                         Fill in the form below to create a new app in your account. Make sure you haven&apos;t created an app with the same name.
                     </DialogDescription>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
     ArrowUpDown,
     MoreHorizontal,
@@ -89,7 +90,11 @@ export const columns: ColumnDef<TestimonialType>[] = [
             const testimonial = row.original;
             const feedback = testimonial.feedback;
 
-            return <div className="line-clamp-1 max-w-[150px]">{feedback}</div>
+            return (
+                <Link href={`/testimonials/${testimonial.id}`} className="line-clamp-1 max-w-[150px] hover:underline">
+                    {feedback}
+                </Link>
+            )
         }
     },
     {
@@ -132,9 +137,11 @@ export const columns: ColumnDef<TestimonialType>[] = [
                         >
                             Copy testimonial ID
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
-                        <DropdownMenuItem>View payment details</DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => navigator.clipboard.writeText(testimonial.feedback)}
+                        >
+                            Copy feedback
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

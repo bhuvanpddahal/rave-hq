@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
     ArrowUpDown,
     MoreHorizontal,
@@ -14,7 +15,6 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/DropdownMenu";
 import { Button } from "@/components/ui/Button";
@@ -91,7 +91,11 @@ export const columns: ColumnDef<TestimonialType>[] = [
             const testimonial = row.original;
             const feedback = testimonial.feedback;
 
-            return <div className="line-clamp-1 max-w-[150px]">{feedback}</div>
+            return (
+                <Link href={`/testimonials/${testimonial.id}`} className="line-clamp-1 max-w-[150px] hover:underline">
+                    {feedback}
+                </Link>
+            )
         }
     },
     {
@@ -131,7 +135,14 @@ export const columns: ColumnDef<TestimonialType>[] = [
             const testimonial = row.original;
             const appName = testimonial.appName;
 
-            return <div>{appName}</div>
+            return (
+                <Link
+                    href={`/apps/${testimonial.appId}`}
+                    className="hover:underline"
+                >
+                    {appName}
+                </Link>
+            )
         }
     },
     {
@@ -150,16 +161,23 @@ export const columns: ColumnDef<TestimonialType>[] = [
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
+                            onClick={() => navigator.clipboard.writeText(testimonial.appId)}
+                        >
+                            Copy app ID
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
                             onClick={() => navigator.clipboard.writeText(testimonial.id)}
                         >
                             Copy testimonial ID
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
-                        <DropdownMenuItem>View payment details</DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => navigator.clipboard.writeText(testimonial.feedback)}
+                        >
+                            Copy feedback
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
-        },
+        }
     }
 ];

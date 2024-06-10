@@ -2,7 +2,8 @@
 
 import {
     ChevronFirst,
-    ChevronLast
+    ChevronLast,
+    Trash2
 } from "lucide-react";
 import {
     ColumnDef,
@@ -29,6 +30,7 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { TESTIMONIALS_PER_PAGE } from "@/constants";
+import { useDeleteTestimonialsModal } from "@/hooks/useDeleteTestimonialsModal";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -45,6 +47,7 @@ export function DataTable<TData, TValue>({
     fetchNextPage,
     isFetchingNextPage
 }: DataTableProps<TData, TValue>) {
+    const { open, setTestimonials } = useDeleteTestimonialsModal();
     const [rowSelection, setRowSelection] = useState({});
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
@@ -75,6 +78,18 @@ export function DataTable<TData, TValue>({
         }
     });
 
+    const handleOpenModal = () => {
+        const rows = table.getFilteredSelectedRowModel().rows;
+        const testimonials = rows.map((row) => ({
+            id: row.original.id,
+            rating: row.original.rating,
+            email: row.original.email,
+            feedback: row.original.feedback
+        }));
+        setTestimonials(testimonials);
+        open();
+    };
+
     return (
         <div className={cn(
             isFetchingNextPage && "opacity-50 pointer-events-none"
@@ -92,6 +107,16 @@ export function DataTable<TData, TValue>({
                     }
                     className="max-w-sm"
                 />
+                {table.getFilteredSelectedRowModel().rows.length > 0 && (
+                    <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={handleOpenModal}
+                    >
+                        <Trash2 className="size-4 mr-1.5" />
+                        Delete ({table.getFilteredSelectedRowModel().rows.length})
+                    </Button>
+                )}
             </div>
             <div className="bg-white rounded-md border">
                 <Table>

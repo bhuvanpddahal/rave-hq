@@ -57,7 +57,7 @@ const ChartCard = ({
                         <CountUp
                             preserveValue
                             start={0}
-                            end={overallRating}
+                            end={overallRating || 0}
                             decimals={2}
                             decimalPlaces={2}
                         />

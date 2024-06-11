@@ -31,10 +31,10 @@ import {
     ResendApiKeyTokenPayload,
     ResendApiKeyTokenValidator
 } from "@/lib/validators/app";
-import { fillMissingDays } from "@/lib/utils";
 import { generateApiKey } from "@/lib/api-key";
 import { sendApiKeyRecoveryEmail } from "@/lib/mail";
 import { generateApiKeyRecoveryToken } from "@/lib/token";
+import { fillMissingDays, fillMissingDaysForDashboard } from "@/lib/utils";
 import { getApiKeyRecoveryTokenByAppId } from "@/lib/queries/api-key-recovery-token";
 
 export const createApp = async (payload: CreateAppPayload) => {
@@ -281,21 +281,24 @@ export const getApps = async (page: number, limit: number) => {
                     testimonial.givenAt >= startDate &&
                     testimonial.givenAt <= currentDate
                 ) {
-                    const lastElement = chartData[chartData.length - 1];
+                    const lastIndex = chartData.length - 1;
+                    const lastElement = chartData[lastIndex];
+                    const date = testimonial.givenAt;
+                    const overallRating = (acc + testimonial.rating) / (index + 1);
 
                     if (
                         chartData.length &&
-                        isSameDay(lastElement.date, testimonial.givenAt)
+                        isSameDay(lastElement.date, date)
                     ) {
-                        chartData[chartData.length - 1] = {
+                        chartData[lastIndex] = {
                             ...lastElement,
-                            overallRating: (acc + testimonial.rating) / (index + 1),
+                            overallRating,
                             count: lastElement.count + 1
                         };
                     } else {
                         chartData.push({
-                            date: testimonial.givenAt,
-                            overallRating: (acc + testimonial.rating) / (index + 1),
+                            date,
+                            overallRating,
                             count: 1
                         });
                     }
@@ -552,7 +555,7 @@ export const getAppInfo = async (payload: GetAppInfoPayload) => {
         if (!session?.user || !session.user.id) return { error: "Unauthorized" };
 
         const { appId } = validatedFields.data;
-        
+
         const app = await db.app.findUnique({
             where: {
                 id: appId
@@ -585,7 +588,7 @@ export const deleteApiKeyForRecovery = async (payload: DeleteApiKeyForRecoveryPa
         if (!session?.user || !session.user.id) return { error: "Unauthorized" };
 
         const { appId, token } = validatedFields.data;
-        
+
         const app = await db.app.findUnique({
             where: {
                 id: appId
@@ -757,5 +760,172 @@ export const bulkDeleteTestimonials = async (payload: BulkDeleteTestimonialsPayl
     } catch (error) {
         console.error(error);
         throw new Error("Something went wrong");
+    }
+};
+
+export type DashboardChartData = {
+    date: Date,
+    value: number
+}[];
+
+export const getDashboardData = async () => {
+    try {
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const apps = await db.app.findMany({
+            where: {
+                userId: session.user.id
+            },
+            orderBy: {
+                createdAt: "asc"
+            },
+            select: {
+                id: true,
+                name: true,
+                createdAt: true
+            }
+        });
+
+        const currentDate = new Date();
+        const startDate = subDays(currentDate, 10);
+
+        let appsChartData: DashboardChartData = [];
+
+        apps.forEach((app) => {
+            if (
+                app.createdAt >= startDate &&
+                app.createdAt <= currentDate
+            ) {
+                const lastIndex = appsChartData.length - 1;
+                const lastElement = appsChartData[lastIndex];
+                const date = app.createdAt;
+                const value = lastElement ? lastElement.value + 1 : 1;
+
+                if (
+                    appsChartData.length &&
+                    isSameDay(lastElement.date, date)
+                ) {
+                    appsChartData[lastIndex] = {
+                        ...lastElement,
+                        value
+                    };
+                } else {
+                    appsChartData.push({
+                        date,
+                        value
+                    });
+                }
+            }
+        });
+
+        const filledAppsChartData = fillMissingDaysForDashboard(
+            appsChartData,
+            startDate,
+            currentDate
+        );
+
+        const testimonials = await db.testimonial.findMany({
+            where: {
+                app: {
+                    userId: session.user.id
+                }
+            },
+            orderBy: {
+                givenAt: "asc"
+            },
+            include: {
+                app: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        });
+
+        let ratingChartData: DashboardChartData = [];
+        let testimonialsChartData: DashboardChartData = [];
+
+        const totalRating = testimonials.reduce((acc, testimonial, index) => {
+            if (
+                testimonial.givenAt >= startDate &&
+                testimonial.givenAt <= currentDate
+            ) {
+                const ratingLastIndex = ratingChartData.length - 1;
+                const ratingLastElement = ratingChartData[ratingLastIndex];
+                const testimonialLastIndex = testimonialsChartData.length - 1;
+                const testimonialLastElement = testimonialsChartData[testimonialLastIndex];
+                const date = testimonial.givenAt;
+                const ratingValue = (acc + testimonial.rating) / (index + 1);
+
+                if (
+                    ratingChartData.length &&
+                    isSameDay(ratingLastElement.date, date)
+                ) {
+                    ratingChartData[ratingLastIndex] = {
+                        ...ratingLastElement,
+                        value: ratingValue
+                    };
+                } else {
+                    ratingChartData.push({
+                        date,
+                        value: ratingValue
+                    });
+                }
+
+                if (
+                    testimonialsChartData.length &&
+                    isSameDay(testimonialLastElement.date, date)
+                ) {
+                    testimonialsChartData[testimonialLastIndex] = {
+                        ...testimonialLastElement,
+                        value: testimonialLastElement.value + 1
+                    };
+                } else {
+                    testimonialsChartData.push({
+                        date,
+                        value: 1
+                    });
+                }
+            }
+            return acc + testimonial.rating;
+        }, 0);
+        const overallRating = totalRating / testimonials.length;
+
+        const filledRatingChartData = fillMissingDaysForDashboard(
+            ratingChartData,
+            startDate,
+            currentDate
+        );
+        const filledTestimonialsChartData = fillMissingDaysForDashboard(
+            testimonialsChartData,
+            startDate,
+            currentDate
+        );
+
+        const recentTestimonials = testimonials.reverse().slice(0, 10);
+        const polishedTestimonials = recentTestimonials.map((testimonial) => ({
+            id: testimonial.id,
+            appId: testimonial.appId,
+            appName: testimonial.app.name,
+            feedback: testimonial.feedback,
+            rating: testimonial.rating,
+            email: testimonial.email,
+            givenAt: testimonial.givenAt,
+            updatedAt: testimonial.updatedAt
+        }));
+
+        return {
+            testimonialsCount: testimonials.length,
+            testimonialsChartData: filledTestimonialsChartData,
+            overallRating,
+            ratingChartData: filledRatingChartData,
+            appsCount: apps.length,
+            appsChartData: filledAppsChartData,
+            recentTestimonials: polishedTestimonials
+        };
+    } catch (error) {
+        console.error(error);
+        return { error: "Something went wrong" };
     }
 };

@@ -41,6 +41,9 @@ const DeleteTestimonialsModal = () => {
                         description: data.success
                     });
                     queryClient.invalidateQueries({
+                        queryKey: ["dashboard"]
+                    });
+                    queryClient.invalidateQueries({
                         queryKey: ["testimonials"]
                     });
                     queryClient.invalidateQueries({

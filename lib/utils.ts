@@ -22,7 +22,7 @@ export function fillMissingDays(
 
     let prevOverallRating = 0;
 
-    const dataPerDay = allDays.map((day, index) => {
+    const dataPerDay = allDays.map((day) => {
         const found = chartData.find((d) => isSameDay(d.date, day));
 
         if (found) {
@@ -33,6 +33,38 @@ export function fillMissingDays(
                 date: day,
                 overallRating: prevOverallRating,
                 count: 0
+            };
+        }
+    });
+
+    return dataPerDay;
+}
+
+export function fillMissingDaysForDashboard(
+    chartData: {
+        date: Date,
+        value: number
+    }[],
+    startDate: Date,
+    endDate: Date
+) {
+    const allDays = eachDayOfInterval({
+        start: startDate,
+        end: endDate
+    });
+
+    let prevValue = 0;
+
+    const dataPerDay = allDays.map((day) => {
+        const found = chartData.find((d) => isSameDay(d.date, day));
+
+        if (found) {
+            prevValue = found.value;
+            return found;
+        } else {
+            return {
+                date: day,
+                value: prevValue
             };
         }
     });

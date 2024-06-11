@@ -47,7 +47,7 @@ const Sidebar = ({ className }: SidebarProps) => {
 
     return (
         <aside className={cn(
-            "bg-white h-screen overflow-y-auto px-5 py-7 space-y-6",
+            "shrink-0 bg-white h-screen overflow-y-auto px-5 py-7 space-y-6",
             className
         )}>
             <div>

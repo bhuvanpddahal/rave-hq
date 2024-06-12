@@ -146,7 +146,7 @@ export const columns: ColumnDef<TestimonialType>[] = [
         }
     },
     {
-        id: "actions",
+        id: "moreOptions",
         cell: ({ row }) => {
             const testimonial = row.original;
 
@@ -159,7 +159,7 @@ export const columns: ColumnDef<TestimonialType>[] = [
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuLabel>More Options</DropdownMenuLabel>
                         <DropdownMenuItem
                             onClick={() => navigator.clipboard.writeText(testimonial.appId)}
                         >

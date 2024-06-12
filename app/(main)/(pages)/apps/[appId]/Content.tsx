@@ -59,7 +59,7 @@ const AppDetailsContent = ({ appId }: AppDetailsContentProps) => {
                 <h1 className="font-bold text-xl text-zinc-800">
                     {data.name}
                 </h1>
-                {data.hashedKey ? (
+                {data.hasApiKey ? (
                     <ApiKeyHelpButton appId={appId} />
                 ) : (
                     <CreateApiKeyButton appId={appId} />

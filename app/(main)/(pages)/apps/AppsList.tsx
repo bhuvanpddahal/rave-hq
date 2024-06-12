@@ -29,7 +29,7 @@ interface FetchAppsProps {
 }
 
 interface AppsData {
-    apps: (App & {
+    apps: (Omit<App, "hashedKey"> & {
         testimonialsCount: number;
         overallRating: number;
         chartData: {

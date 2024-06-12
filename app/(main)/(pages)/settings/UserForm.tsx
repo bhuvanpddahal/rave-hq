@@ -67,7 +67,6 @@ const UserForm = ({
     };
 
     const onSubmit = (payload: UpdateUserPayload) => {
-        console.log({ payload });
         startTransition(() => {
             updateUser(payload).then((data) => {
                 if (data.success) {

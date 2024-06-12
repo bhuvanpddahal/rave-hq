@@ -11,15 +11,7 @@ export default {
     providers: [
         Google({
             clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            // If you want to integrate other Google APIs in your app
-            // authorization: {
-            //     params: {
-            //         scope: "openid https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
-            //         prompt: "consent",
-            //         access_type: "offline"
-            //     }
-            // }
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
         }),
         Github({
             clientId: process.env.GITHUB_CLIENT_ID,

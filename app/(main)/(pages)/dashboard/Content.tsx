@@ -1,73 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 
 import Cards, { CardsLoader } from "./Cards";
 import RecentTestimonials, { RecentTestimonialsLoader } from "./RecentTestimonials";
 import { getDashboardData } from "@/actions/app";
-
-const testimonials = [
-    {
-        id: "123",
-        appId: "3456",
-        feedback: "This is feedback",
-        rating: 4,
-        email: "email@gmail.com",
-        givenAt: new Date(),
-        updatedAt: new Date(),
-        appName: "App name"
-    },
-    {
-        id: "123",
-        appId: "3456",
-        feedback: "This is feedback",
-        rating: 4,
-        email: "email@gmail.com",
-        givenAt: new Date(),
-        updatedAt: new Date(),
-        appName: "App name"
-    },
-    {
-        id: "123",
-        appId: "3456",
-        feedback: "This is feedback",
-        rating: 4,
-        email: "email@gmail.com",
-        givenAt: new Date(),
-        updatedAt: new Date(),
-        appName: "App name"
-    },
-    {
-        id: "123",
-        appId: "3456",
-        feedback: "This is feedback",
-        rating: 4,
-        email: "email@gmail.com",
-        givenAt: new Date(),
-        updatedAt: new Date(),
-        appName: "App name"
-    },
-    {
-        id: "123",
-        appId: "3456",
-        feedback: "This is feedback",
-        rating: 4,
-        email: "email@gmail.com",
-        givenAt: new Date(),
-        updatedAt: new Date(),
-        appName: "App name"
-    },
-    {
-        id: "123",
-        appId: "3456",
-        feedback: "This is feedback",
-        rating: 4,
-        email: "email@gmail.com",
-        givenAt: new Date(),
-        updatedAt: new Date(),
-        appName: "App name"
-    },
-]
 
 const DashboardContent = () => {
     const {
@@ -88,8 +26,16 @@ const DashboardContent = () => {
         </div>
     )
     if (!data || data.error) return (
-        <div>
-            Error
+        <div className="py-20 flex flex-col items-center justify-center gap-y-2">
+            <Image
+                src="/error.png"
+                alt="Error"
+                height={100}
+                width={100}
+            />
+            <p className="text-sm font-medium text-zinc-400">
+                {data?.error || "Something went wrong"}
+            </p>
         </div>
     )
 

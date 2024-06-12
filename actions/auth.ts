@@ -2,6 +2,7 @@
 
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
+import { v2 as cloudinary } from "cloudinary";
 
 import { db } from "@/lib/db";
 import {
@@ -11,15 +12,23 @@ import {
     ResendTokenValidator,
     SigninPayload,
     SigninValidator,
+    UpdateUserPayload,
+    UpdateUserValidator,
     VerifyEmailPayload,
     VerifyEmailValidator
 } from "@/lib/validators/auth";
-import { signIn } from "@/auth";
+import { auth, signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { sendVerificationEmail } from "@/lib/mail";
 import { generateVerificationToken } from "@/lib/token";
 import { getUserByEmail, getUserById } from "@/lib/queries/user";
 import { getVerificationTokenByEmail } from "@/lib/queries/verification-token";
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 export const signinWithEmail = async (payload: SigninPayload) => {
     try {
@@ -171,5 +180,86 @@ export const getUserEmail = async (payload: GetUserEmailPayload) => {
     } catch (error) {
         console.error(error);
         return { error: "Something went wrong" };
+    }
+};
+
+export const checkSigninType = async () => {
+    try {
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const user = await db.user.findUnique({
+            where: {
+                id: session.user.id
+            }
+        });
+        if (!user) return { error: "User not found" };
+
+        const isCredentialsSignin = !!user.password;
+
+        return { isCredentialsSignin };
+    } catch (error) {
+        console.error(error);
+        return { error: "Something went wrong" };
+    }
+};
+
+export const updateUser = async (payload: UpdateUserPayload) => {
+    try {
+        const validatedFields = UpdateUserValidator.safeParse(payload);
+        if (!validatedFields.success) return { error: "Invalid fields" };
+
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const { name, image, newPassword } = validatedFields.data;
+
+        const user = await db.user.findUnique({
+            where: {
+                id: session.user.id
+            }
+        });
+        if (!user) return { error: "User not found" };
+
+        const isCredentialsSignin = !!user.password;
+
+        let imageUrl: string | null;
+        if (image) imageUrl = (await cloudinary.uploader.upload(image, { overwrite: false })).secure_url;
+        else imageUrl = user.image;
+
+        let newName: string | null;
+        if (name.length) newName = name;
+        else newName = null;
+
+        if (isCredentialsSignin && newPassword) {
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+            await db.user.update({
+                where: {
+                    id: session.user.id
+                },
+                data: {
+                    name: newName,
+                    image: imageUrl,
+                    password: hashedPassword
+                }
+            });
+        } else {
+            await db.user.update({
+                where: {
+                    id: session.user.id
+                },
+                data: {
+                    name: newName,
+                    image: imageUrl
+                }
+            });
+        }
+
+        return { success: "Profile updated" };
+    } catch (error) {
+        console.error(error);
+        throw new Error("Something went wrong");
     }
 };

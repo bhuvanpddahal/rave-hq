@@ -28,8 +28,8 @@ const ChartCard = ({
 }: ChartCardProps) => {
     return (
         <Card className="col-span-1 xl:col-span-4">
-            <CardHeader className="flex-row items-center justify-between">
-                <CardTitle className="text-lg text-zinc-800">
+            <CardHeader className="pb-4">
+                <CardTitle className="text-base font-bold text-zinc-800">
                     History
                 </CardTitle>
             </CardHeader>
@@ -38,22 +38,19 @@ const ChartCard = ({
             </CardContent>
             <CardFooter className="justify-between">
                 <div className="flex flex-col items-center">
-                    <p className="text-slate-400 text-sm font-medium">
-                        Testimonials
-                    </p>
-                    <p className="font-semibold text-slate-800 text-lg">
+                    <p className="font-semibold text-slate-800 text-lg -mb-1">
                         <CountUp
                             preserveValue
                             start={0}
                             end={testimonialsCount}
                         />
                     </p>
+                    <p className="text-slate-400 text-sm font-medium">
+                        Testimonials
+                    </p>
                 </div>
                 <div className="flex flex-col items-center">
-                    <p className="text-slate-400 text-sm font-medium">
-                        Overall Rating
-                    </p>
-                    <p className="font-semibold text-slate-800 text-lg">
+                    <p className="font-semibold text-slate-800 text-lg -mb-1">
                         <CountUp
                             preserveValue
                             start={0}
@@ -61,6 +58,9 @@ const ChartCard = ({
                             decimals={2}
                             decimalPlaces={2}
                         />
+                    </p>
+                    <p className="text-slate-400 text-sm font-medium">
+                        Overall Rating
                     </p>
                 </div>
             </CardFooter>
@@ -73,19 +73,17 @@ export default ChartCard;
 export const ChartCardLoader = () => {
     return (
         <Card className="col-span-1 xl:col-span-4">
-            <CardHeader className="flex-row items-center justify-between">
-                <CardTitle className="text-lg text-zinc-800">
-                    History
-                </CardTitle>
+            <CardHeader className="pb-4">
+                <Skeleton className="h-6 w-24 rounded-sm" />
             </CardHeader>
             <CardContent>
-                <div className="h-[240px] w-full flex items-center justify-center">
+                <div className="h-[200px] w-full flex items-center justify-center">
                     <Loader2 className="h-5 w-5 text-slate-500 stroke-1 animate-spin" />
                 </div>
             </CardContent>
             <CardFooter className="justify-between">
-                <Skeleton className="h-12 w-20 rounded-sm" />
-                <Skeleton className="h-12 w-20 rounded-sm" />
+                <Skeleton className="h-11 w-20 rounded-sm" />
+                <Skeleton className="h-11 w-20 rounded-sm" />
             </CardFooter>
         </Card>
     )

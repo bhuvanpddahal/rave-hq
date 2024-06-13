@@ -11,7 +11,7 @@ const NewTestimonialButton = () => {
             variant="primary"
             onClick={open}
         >
-            Create a new testimonial
+            Create testimonial
         </Button>
     )
 };

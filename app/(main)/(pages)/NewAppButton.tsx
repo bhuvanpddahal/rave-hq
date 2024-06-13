@@ -10,6 +10,7 @@ const NewAppButton = () => {
         <Button
             variant="outline"
             onClick={open}
+            className="mt-2"
         >
             Create a new app
         </Button>

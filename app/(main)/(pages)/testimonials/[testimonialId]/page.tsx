@@ -14,7 +14,7 @@ const TestimonialDetailsPage = ({
     params: { testimonialId }
 }: TestimonialDetailsPageProps) => {
     return (
-        <div className="mt-6">
+        <div className="mt-[40px]">
             <TestimonialDetailsContent
                 testimonialId={testimonialId}
             />

@@ -10,21 +10,21 @@ export const Footer = () => {
                     <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
                         <Link
                             href="/"
-                            className="flex items-center justify-center md:justify-start"
+                            className="mx-auto md:mx-0"
                         >
                             <Image
                                 src="/logo.svg"
                                 alt="Logo"
                                 height={50}
                                 width={188}
-                                className="h-[40px] w-auto"
+                                className="inline-block h-[40px] w-auto"
                             />
                         </Link>
                         <p className="mt-3 text-sm text-slate-700">
                             QuickCodeKit is your one-stop shop for maximizing your coding efficiency and propelling your programming skills to new heights. Sign up for a free trial today and experience the difference!
                         </p>
                         <p className="mt-3 text-sm text-zinc-800/60">
-                            Copyright © 2024 - All rights reserved
+                            Copyright © {(new Date()).getFullYear()} - All rights reserved
                         </p>
                     </div>
                     <div className="flex-grow flex flex-wrap justify-center -mb-10 md:mt-0 mt-10 text-center md:pl-24">
@@ -59,11 +59,11 @@ export const Footer = () => {
                                 MORE
                             </div>
                             <div className="flex flex-col justify-center items-center md:items-start gap-2 mb-10 text-sm">
-                                <Link href="/" className="hover:underline">
+                                <Link href="https://pass-lock-five.vercel.app" className="hover:underline">
                                     PassLock
                                 </Link>
-                                <Link href="/" className="hover:underline">
-                                    HobbyHive
+                                <Link href="https://code-overflow-phi.vercel.app" className="hover:underline">
+                                    Code Overflow
                                 </Link>
                             </div>
                         </div>
@@ -73,7 +73,11 @@ export const Footer = () => {
                     Built with
                     <FcLike className="h-4 w-4" />
                     by
-                    <Link href="/" className="text-emerald-500 underline">
+                    <Link
+                        href="https://github.com/BhuvanPdDahal"
+                        target="_blank"
+                        className="text-emerald-500 underline"
+                    >
                         Bhuvan Dahal
                     </Link>
                 </div>

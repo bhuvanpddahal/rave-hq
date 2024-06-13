@@ -28,12 +28,12 @@ const AppDetailsContent = ({ appId }: AppDetailsContentProps) => {
     });
 
     if (isLoading) return (
-        <div className="space-y-4 mt-6">
+        <div className="space-y-4 mt-[40px]">
             <div className="flex items-center justify-between">
-                <Skeleton className="bg-white h-9 w-[120px] rounded-md" />
-                <Skeleton className="bg-white h-8 w-15 rounded-md" />
+                <Skeleton className="bg-white h-7 w-[120px] rounded-sm" />
+                <Skeleton className="bg-white h-10 w-[150px] rounded-sm" />
             </div>
-            <div className="space-y-6">
+            <div className="space-y-4">
                 <OverviewLoader />
                 <TestimonialsLoader />
             </div>
@@ -54,7 +54,7 @@ const AppDetailsContent = ({ appId }: AppDetailsContentProps) => {
     )
 
     return (
-        <div className="space-y-4 mt-6">
+        <div className="space-y-4 mt-[40px]">
             <div className="flex items-center justify-between">
                 <h1 className="font-bold text-xl text-zinc-800">
                     {data.name}
@@ -65,7 +65,7 @@ const AppDetailsContent = ({ appId }: AppDetailsContentProps) => {
                     <CreateApiKeyButton appId={appId} />
                 )}
             </div>
-            <div className="space-y-6">
+            <div className="space-y-4">
                 <Overview
                     testimonialsCount={data.testimonialsCount}
                     overallRating={data.overallRating}

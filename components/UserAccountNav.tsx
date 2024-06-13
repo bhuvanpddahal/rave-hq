@@ -33,6 +33,7 @@ const UserAccountNav = () => {
                 <UserAvatar
                     image={currentUser.image}
                     name={currentUser.name}
+                    email={currentUser.email}
                 />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

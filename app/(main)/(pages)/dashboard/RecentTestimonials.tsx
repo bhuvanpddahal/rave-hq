@@ -17,7 +17,7 @@ const RecentTestimonials = ({
 }: RecentTestimonialsProps) => {
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="pb-4">
                 <CardTitle className="text-base font-bold text-zinc-800">
                     Recent Testimonials
                 </CardTitle>
@@ -37,7 +37,7 @@ export default RecentTestimonials;
 export const RecentTestimonialsLoader = () => {
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="pb-4">
                 <Skeleton className="h-6 w-[120px] rounded-sm" />
             </CardHeader>
             <CardContent>

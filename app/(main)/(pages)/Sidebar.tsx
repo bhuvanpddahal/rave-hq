@@ -50,17 +50,15 @@ const Sidebar = ({ className }: SidebarProps) => {
             "shrink-0 bg-white h-screen overflow-y-auto px-5 py-7 space-y-6",
             className
         )}>
-            <div>
-                <Link href="/">
-                    <Image
-                        src="/logo.svg"
-                        alt="Logo"
-                        height={50}
-                        width={188}
-                        className="h-[30px] w-auto"
-                    />
-                </Link>
-            </div>
+            <Link href="/">
+                <Image
+                    src="/logo.svg"
+                    alt="Logo"
+                    height={50}
+                    width={188}
+                    className="inline-block h-[30px] w-auto"
+                />
+            </Link>
             <div className="space-y-3">
                 <h3 className="text-xs font-bold text-zinc-500">
                     DASHBOARD

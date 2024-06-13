@@ -17,6 +17,12 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
     matcher: [
-        "/dashboard"
+        "/dashboard",
+        "/testimonials",
+        "/testimonials/:testimonialId",
+        "/apps",
+        "/apps/:appId",
+        "/settings",
+        "/recover-api-key"
     ]
 };

@@ -37,11 +37,11 @@ const TestimonialDetailsContent = ({
             <div className="w-full flex justify-between">
                 <div className="flex items-center gap-1.5">
                     <Timer className="h-4 w-4 text-zinc-500" />
-                    <Skeleton className="bg-white rounded-sm h-6 w-[150px]" />
+                    <Skeleton className="bg-white rounded-sm h-5 w-[150px]" />
                 </div>
                 <div className="flex items-center gap-1.5">
                     <TimerReset className="h-4 w-4 text-zinc-500" />
-                    <Skeleton className="bg-white rounded-sm h-6 w-[150px]" />
+                    <Skeleton className="bg-white rounded-sm h-5 w-[150px]" />
                 </div>
             </div>
             <div className="flex flex-col items-center gap-y-4">
@@ -50,7 +50,7 @@ const TestimonialDetailsContent = ({
                     <div className="h-20 w-20 rounded-full bg-gradient-to-b from-primary to-primary-foreground p-2 overflow-hidden">
                         <HiMiniUser className="h-full w-full text-secondary/50" />
                     </div>
-                    <Skeleton className="bg-white rounded-sm h-7 w-[200px]" />
+                    <Skeleton className="bg-white rounded-sm h-6 w-[200px]" />
                 </div>
                 <div className="flex gap-x-1">
                     {Array.from({ length: 5 }, (_, index) => (
@@ -58,14 +58,14 @@ const TestimonialDetailsContent = ({
                     ))}
                 </div>
                 <div className="flex flex-col items-center gap-y-2">
-                    <Skeleton className="bg-white rounded-sm h-7 w-[380px]" />
-                    <Skeleton className="bg-white rounded-sm h-7 w-[450px]" />
-                    <Skeleton className="bg-white rounded-sm h-7 w-[400px]" />
+                    <Skeleton className="bg-white rounded-sm h-6 w-[380px]" />
+                    <Skeleton className="bg-white rounded-sm h-6 w-[450px]" />
+                    <Skeleton className="bg-white rounded-sm h-6 w-[400px]" />
                 </div>
             </div>
             <div className="w-full flex items-center justify-end gap-1.5 text-sm mt-5 text-zinc-700">
                 Testimonial for
-                <Skeleton className="bg-white rounded-sm h-6 w-[150px]" />
+                <Skeleton className="bg-white rounded-sm h-5 w-[150px]" />
             </div>
         </div>
     )

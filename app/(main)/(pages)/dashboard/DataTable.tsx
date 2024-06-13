@@ -73,11 +73,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <div className="flex-1 text-sm text-muted-foreground">
-                {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                {table.getFilteredRowModel().rows.length} row(s) selected.
-            </div>
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 py-4">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pb-4">
                 <Input
                     placeholder="Filter emails..."
                     value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -148,7 +144,7 @@ export function DataTable<TData, TValue>({
 export const DataTableLoader = () => {
     return (
         <div>
-            <div className="py-4">
+            <div className="pb-4">
                 <Skeleton className="h-10 max-w-sm w-full rounded-sm" />
             </div>
             <Skeleton className="h-[200px] w-full rounded-md" />

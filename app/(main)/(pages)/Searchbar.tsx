@@ -11,19 +11,33 @@ import {
     CommandGroup,
     CommandInput,
     CommandItem,
-    CommandList,
-    CommandSeparator,
-    CommandShortcut,
+    CommandList
 } from "@/components/ui/Command";
 
 const commandItems = [
+    {
+        name: "Apps Page",
+        href: "/apps"
+    },
+    {
+        name: "Dashboard Page",
+        href: "/dashboard"
+    },
     {
         name: "Home Page",
         href: "/"
     },
     {
+        name: "Settings Page",
+        href: "/settings"
+    },
+    {
         name: "Sign in Page",
         href: "/signin"
+    },
+    {
+        name: "Testimonials Page",
+        href: "/testimonials"
     }
 ];
 

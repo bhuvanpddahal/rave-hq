@@ -99,7 +99,7 @@ const AppsList = () => {
                 />
             </div>
             {!apps && isLoading && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {Array.from({ length: 4 }, (_, index) => (
                         <AppLoader key={index} />
                     ))}
@@ -107,7 +107,7 @@ const AppsList = () => {
             )}
             {apps && (
                 apps.length > 0 ? (
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {apps.map((app, index) => {
                             const isEligible = app.name.includes(filter);
 
@@ -120,8 +120,8 @@ const AppsList = () => {
                                                 ? ref : undefined
                                         }
                                     >
-                                        <CardHeader className="flex-row items-center justify-between">
-                                            <CardTitle className="text-lg text-zinc-800">
+                                        <CardHeader className="flex-row items-center justify-between pb-4">
+                                            <CardTitle className="text-base font-bold text-zinc-800">
                                                 {app.name}
                                             </CardTitle>
                                             <Button
@@ -137,22 +137,19 @@ const AppsList = () => {
                                         </CardContent>
                                         <CardFooter className="justify-between">
                                             <div className="flex flex-col items-center">
-                                                <p className="text-slate-400 text-sm font-medium">
-                                                    Testimonials
-                                                </p>
-                                                <p className="font-semibold text-slate-800 text-lg">
+                                                <p className="font-semibold text-slate-800 text-lg -mb-1">
                                                     <CountUp
                                                         preserveValue
                                                         start={0}
                                                         end={app.testimonialsCount}
                                                     />
                                                 </p>
+                                                <p className="text-slate-400 text-sm font-medium">
+                                                    Testimonials
+                                                </p>
                                             </div>
                                             <div className="flex flex-col items-center">
-                                                <p className="text-slate-400 text-sm font-medium">
-                                                    Overall Rating
-                                                </p>
-                                                <p className="font-semibold text-slate-800 text-lg">
+                                                <p className="font-semibold text-slate-800 text-lg -mb-1">
                                                     <CountUp
                                                         preserveValue
                                                         start={0}
@@ -160,6 +157,9 @@ const AppsList = () => {
                                                         decimals={2}
                                                         decimalPlaces={2}
                                                     />
+                                                </p>
+                                                <p className="text-slate-400 text-sm font-medium">
+                                                    Overall Rating
                                                 </p>
                                             </div>
                                         </CardFooter>
@@ -198,18 +198,18 @@ export default AppsList;
 const AppLoader = () => {
     return (
         <Card>
-            <CardHeader className="flex-row items-center justify-between">
-                <Skeleton className="h-8 w-40 rounded-sm" />
+            <CardHeader className="flex-row items-center justify-between pb-4">
+                <Skeleton className="h-6 w-24 rounded-sm" />
                 <Skeleton className="h-7 w-14 rounded-sm" />
             </CardHeader>
             <CardContent>
-                <div className="h-[240px] w-full flex items-center justify-center">
+                <div className="h-[200px] w-full flex items-center justify-center">
                     <Loader2 className="h-5 w-5 text-slate-500 stroke-1 animate-spin" />
                 </div>
             </CardContent>
             <CardFooter className="justify-between">
-                <Skeleton className="h-12 w-20 rounded-sm" />
-                <Skeleton className="h-12 w-20 rounded-sm" />
+                <Skeleton className="h-11 w-20 rounded-sm" />
+                <Skeleton className="h-11 w-20 rounded-sm" />
             </CardFooter>
         </Card>
     )

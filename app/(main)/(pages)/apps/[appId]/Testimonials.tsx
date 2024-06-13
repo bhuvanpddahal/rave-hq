@@ -1,12 +1,18 @@
 import { Testimonial } from "@prisma/client";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle
+} from "@/components/ui/Card";
 import { columns } from "./Columns";
-import { DataTable } from "./DataTable";
 import { useToast } from "@/hooks/useToast";
 import { getAppTestimonials } from "@/actions/app";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { APP_TESTIMONIALS_PER_PAGE } from "@/constants";
+import { DataTable, DataTableLoader } from "./DataTable";
 
 interface TestimonialsProps {
     appId: string;
@@ -68,17 +74,21 @@ const Testimonials = ({ appId }: TestimonialsProps) => {
     }
 
     return (
-        <div>
-            <h2 className="font-semibold text-lg text-zinc-800 mb-1">
-                Testimonials
-            </h2>
-            <DataTable
-                columns={columns}
-                data={testimonials}
-                hasNextPage={hasNextPage}
-                isFetchingNextPage={isFetchingNextPage}
-            />
-        </div>
+        <Card>
+            <CardHeader className="pb-4">
+                <CardTitle className="text-base font-bold text-zinc-800">
+                    Testimonials
+                </CardTitle>
+            </CardHeader>
+            <CardContent>
+                <DataTable
+                    columns={columns}
+                    data={testimonials}
+                    hasNextPage={hasNextPage}
+                    isFetchingNextPage={isFetchingNextPage}
+                />
+            </CardContent>
+        </Card>
     )
 };
 
@@ -86,16 +96,13 @@ export default Testimonials;
 
 export const TestimonialsLoader = () => {
     return (
-        <div>
-            <h2 className="font-semibold text-lg text-zinc-800 mb-1">
-                Testimonials
-            </h2>
-            <div>
-                <div className="py-4">
-                    <Skeleton className="max-w-sm bg-white h-10 rounded-sm" />
-                </div>
-                <Skeleton className="bg-white h-[250px] w-full rounded-sm" />
-            </div>
-        </div>
+        <Card>
+            <CardHeader className="pb-4">
+                <Skeleton className="h-6 w-[90px] rounded-sm" />
+            </CardHeader>
+            <CardContent>
+                <DataTableLoader />
+            </CardContent>
+        </Card>
     )
 };

@@ -20,7 +20,7 @@ const COLORS = ["#0062FF", "#12C6FF", "#FF647F", "#FF9354", "#8AF27E", "#8E63F2"
 
 const PieDiagram = ({ data }: PieDiagramProps) => {
     return (
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={260}>
             <PieChart>
                 <Legend
                     layout="horizontal"

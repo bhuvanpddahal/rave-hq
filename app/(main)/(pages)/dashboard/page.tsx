@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import DashboardContent from "./Content";
+import ViewTestimonialsButton from "./ViewTestimonialsButton";
 
 export const metadata = {
     title: "Overview - RaveHQ"
@@ -9,7 +10,7 @@ export const metadata = {
 const DashboardPage = () => {
     return (
         <div className="mt-[60px] space-y-6">
-            <div className="relative p-6 pt-4 sm:pr-[220px] rounded-sm bg-gradient-to-b from-primary to-primary/60 space-y-2">
+            <div className="relative p-6 pt-4 sm:pr-[220px] rounded-sm bg-gradient-to-b from-primary to-primary/60">
                 <Image
                     src="/overview.svg"
                     alt="Overview"
@@ -23,6 +24,7 @@ const DashboardPage = () => {
                 <p className="text-primary-foreground text-sm">
                     Review, search, sort and visualize all of your progress easily with charts.
                 </p>
+                <ViewTestimonialsButton />
             </div>
             <DashboardContent />
         </div>

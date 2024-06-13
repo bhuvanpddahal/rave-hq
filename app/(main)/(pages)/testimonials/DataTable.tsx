@@ -29,6 +29,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { TESTIMONIALS_PER_PAGE } from "@/constants";
 import { useDeleteTestimonialsModal } from "@/hooks/useDeleteTestimonialsModal";
 
@@ -94,11 +95,7 @@ export function DataTable<TData, TValue>({
         <div className={cn(
             isFetchingNextPage && "opacity-50 pointer-events-none"
         )}>
-            <div className="flex-1 text-sm text-muted-foreground">
-                {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                {table.getFilteredRowModel().rows.length} row(s) selected.
-            </div>
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 py-4">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pb-4">
                 <Input
                     placeholder="Filter emails..."
                     value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -162,7 +159,7 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            <div className="flex items-center justify-end space-x-2 py-4">
+            <div className="flex items-center justify-end space-x-2 pt-4">
                 <Button
                     className="h-8 px-3"
                     onClick={() => table.previousPage()}
@@ -181,3 +178,18 @@ export function DataTable<TData, TValue>({
         </div>
     )
 }
+
+export const DataTableLoader = () => {
+    return (
+        <div>
+            <div className="pb-4">
+                <Skeleton className="h-10 max-w-sm w-full rounded-sm" />
+            </div>
+            <Skeleton className="h-[200px] w-full rounded-md" />
+            <div className="flex items-center justify-end space-x-2 pt-4">
+                <Skeleton className="h-8 w-[42px] rounded-sm" />
+                <Skeleton className="h-8 w-[42px] rounded-sm" />
+            </div>
+        </div>
+    )
+};

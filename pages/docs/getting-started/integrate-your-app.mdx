@@ -1,0 +1,120 @@
+# Integrate Your App
+
+By following these steps, you'll be able to seamlessly leverage RaveHQ's features to enhance your app's functionality.
+
+## Prerequisites
+
+Before diving into the integration process, ensure you have the following:
+
+* A RaveHQ account with an active API key. If you don't have one, follow [this](/docs/setup-your-account) guide to get one.
+* Basic understanding of making API calls using Fetch or Axios in your chosen programming language.
+
+## RaveHQ API Overview
+
+RaveHQ offers a robust API that empowers you to interact with various functionalities programmatically. The API uses JSON for data exchange, ensuring a consistent and well-structured format.
+
+* **Example Request Body**:
+
+```json copy filename="JSON"
+{
+    "appId": "665afe9ea139172a810cf2a5",
+    "feedback": "I'm a big fan of RaveHQ and use it all the time for testimonial management.",
+    "rating": 4,
+    "email": "user@mail.com"
+}
+```
+
+*Note: Rating should range from 0 to 5.*
+
+* **Example Success Response**:
+
+```json copy filename="JSON"
+{
+  "success": true,
+  "testimonialId": "666d213e85dd8ffdefe19fd2"
+}
+```
+
+* **Example Error Response**:
+
+```json copy filename="JSON"
+{
+  "error": "App not found"
+}
+```
+
+## API Calls with Fetch
+
+Here's an example of using Fetch API to make a request to the RaveHQ API:
+
+```js copy filename="JavaScript"
+const apiKey = "RAVEHQ_API_KEY"; // Replace with your actual API key
+
+async function createTestimonial(data) {
+  const url = `https://rave-hq.vercel.app/testimonials`;
+  const headers = {
+    "Authorization": `Bearer ${apiKey}`,
+    "Content-Type": "application/json"
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(data)  // Stringify data before sending
+    });
+    const responseData = await response.json();
+
+    if (responseData.success) {
+      console.log("Testimonial created successfully:", responseData.data);
+    } else {
+      console.error("Error creating testimonial:", responseData.error);
+    }
+  } catch (error) {
+    console.error("Error creating testimonial:", error);
+  }
+}
+
+const testimonialData = {
+  appId: "665afe9ea139172a810cf2a5",
+  feedback: "This is a great product!",
+  rating: 5,
+  email: "user@mail.com"
+};
+
+createTestimonial(testimonialData);
+```
+
+## API Calls with Axios
+
+Here's an example of using Axios to make a request to the RaveHQ API:
+
+```js copy filename="JavaScript"
+const axios = require('axios');
+
+const apiKey = "RAVEHQ_API_KEY"; // Replace with your actual API key
+
+const data = {
+  appId: "665afe9ea139172a810cf2a5",
+  feedback: "This is a great product!",
+  rating: 5,
+  email: "user@mail.com"
+};
+
+axios.post('https://rave-hq.vercel.app/testimonials', data, {
+  headers: {
+    "Authorization": `Bearer ${apiKey}`,
+    "Content-Type": "application/json"
+  }
+})
+.then((response) => {
+  if (response.data.success) {
+    console.log("Testimonial created successfully:", response.data.data);
+  } else {
+    console.error("Error creating testimonial:", response.data.error);
+  }
+})
+.catch((error) => {
+  console.error("Error creating testimonial:", error);
+});
+```

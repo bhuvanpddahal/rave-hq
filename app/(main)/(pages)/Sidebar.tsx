@@ -70,7 +70,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                                 href={link.href}
                                 className={cn(
                                     "flex items-center gap-2 px-3 py-2 font-medium rounded-sm text-sm transition-colors",
-                                    pathname.includes(link.href)
+                                    pathname?.includes(link.href)
                                         ? "bg-gradient-to-b from-secondary/60 to-secondary text-secondary-foreground hover:bg-zinc-500/80"
                                         : "hover:bg-slate-100"
                                 )}
@@ -93,7 +93,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                                 href={link.href}
                                 className={cn(
                                     "flex items-center gap-2 px-3 py-2 font-medium rounded-sm text-sm transition-colors",
-                                    pathname.includes(link.href)
+                                    pathname?.includes(link.href)
                                         ? "bg-gradient-to-b from-secondary/60 to-secondary text-secondary-foreground hover:bg-zinc-500/80"
                                         : "hover:bg-slate-100"
                                 )}

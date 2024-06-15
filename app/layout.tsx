@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Hanken_Grotesk } from "next/font/google";
 
-import "./globals.css";
+import "@/styles/globals.css";
 import Modals from "@/components/Modals";
 import Providers from "@/components/Providers";
 import { auth } from "@/auth";

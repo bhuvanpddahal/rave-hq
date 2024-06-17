@@ -1,7 +1,7 @@
 import SettingsContent from "./Content";
 
 export const metadata = {
-    title: "Settings - RaveHQ"
+    title: "Settings"
 };
 
 const SettingsPage = () => {

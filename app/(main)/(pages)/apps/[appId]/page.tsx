@@ -7,7 +7,7 @@ interface AppDetailsPageProps {
 }
 
 export const metadata = {
-    title: "App Details - RaveHQ"
+    title: "App Details"
 };
 
 const AppDetailsPage = ({

@@ -5,7 +5,7 @@ import SocialButtons from "./SocialButtons";
 import { Separator } from "@/components/ui/Separator";
 
 export const metadata = {
-    title: "Sign In - RaveHQ"
+    title: "Sign In"
 };
 
 const SigninPage = () => {

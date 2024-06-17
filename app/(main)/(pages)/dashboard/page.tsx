@@ -4,7 +4,7 @@ import DashboardContent from "./Content";
 import ViewTestimonialsButton from "./ViewTestimonialsButton";
 
 export const metadata = {
-    title: "Overview - RaveHQ"
+    title: "Overview"
 };
 
 const DashboardPage = () => {

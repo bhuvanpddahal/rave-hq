@@ -3,7 +3,7 @@ import Image from "next/image";
 import VerifyEmailContent from "./Content";
 
 export const metadata = {
-    title: "Verify Email - RaveHQ"
+    title: "Verify Email"
 };
 
 const VerifyEmailPage = () => {

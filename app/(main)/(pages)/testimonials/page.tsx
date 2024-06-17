@@ -1,7 +1,7 @@
 import TestimonialsContent from "./Content";
 
 export const metadata = {
-    title: "Testimonials - RaveHQ"
+    title: "Testimonials"
 };
 
 const TestimonialsPage = () => {

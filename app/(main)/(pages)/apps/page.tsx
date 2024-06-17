@@ -3,7 +3,7 @@ import AppsList from "./AppsList";
 import NewAppButton from "../NewAppButton";
 
 export const metadata = {
-    title: "Apps - RaveHQ"
+    title: "Apps"
 };
 
 const AppsPage = () => {

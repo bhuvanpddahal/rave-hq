@@ -3,7 +3,7 @@ import Image from "next/image";
 import RecoverApiKeyContent from "./Content";
 
 export const metadata = {
-    title: "Recover API Key - RaveHQ"
+    title: "Recover API Key"
 };
 
 const RecoverApiKeyPage = () => {

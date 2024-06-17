@@ -7,7 +7,7 @@ interface TestimonialDetailsPageProps {
 }
 
 export const metadata = {
-    title: "Testimonial Details - RaveHQ"
+    title: "Testimonial Details"
 };
 
 const TestimonialDetailsPage = ({

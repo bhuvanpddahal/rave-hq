@@ -10,8 +10,23 @@ import { Toaster } from "@/components/ui/Toaster";
 const hankenGrotesk = Hanken_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "RaveHQ",
-    description: "Introducing the ultimate testimonial collection and management platform",
+    metadataBase: new URL("https://rave-hq.vercel.app"),
+    keywords: [
+        "rave hq",
+        "rave",
+        "testimonial collection platform",
+        "testimonial management platform"
+    ],
+    title: {
+        default: "RaveHQ",
+        template: "%s - RaveHQ"
+    },
+    openGraph: {
+        description: "Introducing the ultimate testimonial collection and management platform",
+        images: [
+            "https://rave-hq.vercel.app/logo.svg"
+        ]
+    },
     icons: {
         icon: "/logo-icon.svg"
     }

@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 
+import EditButton from "./EditButton";
+import DeleteButton from "./DeleteButton";
 import ApiKeyHelpButton from "./ApiKeyHelpButton";
 import CreateApiKeyButton from "./CreateApiKeyButton";
 import Overview, { OverviewLoader } from "./Overview";
@@ -59,11 +61,23 @@ const AppDetailsContent = ({ appId }: AppDetailsContentProps) => {
                 <h1 className="font-bold text-xl text-zinc-800">
                     {data.name}
                 </h1>
-                {data.hasApiKey ? (
-                    <ApiKeyHelpButton appId={appId} />
-                ) : (
-                    <CreateApiKeyButton appId={appId} />
-                )}
+                <div className="flex gap-2">
+                    <DeleteButton
+                        appId={appId}
+                        appName={data.name || ""}
+                        testimonialsCount={data.testimonialsCount || 0}
+                        overallRating={data.overallRating || 0}
+                    />
+                    <EditButton
+                        appId={appId}
+                        appName={data.name || ""}
+                    />
+                    {data.hasApiKey ? (
+                        <ApiKeyHelpButton appId={appId} />
+                    ) : (
+                        <CreateApiKeyButton appId={appId} />
+                    )}
+                </div>
             </div>
             <div className="space-y-4">
                 <Overview

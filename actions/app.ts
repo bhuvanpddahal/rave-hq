@@ -16,6 +16,10 @@ import {
     CreateTestimonialValidator,
     DeleteApiKeyForRecoveryPayload,
     DeleteApiKeyForRecoveryValidator,
+    DeleteAppPayload,
+    DeleteAppValidator,
+    EditAppPayload,
+    EditAppValidator,
     GetAppInfoPayload,
     GetAppInfoValidator,
     GetAppPayload,
@@ -65,6 +69,73 @@ export const createApp = async (payload: CreateAppPayload) => {
         });
 
         return { success: "New app created", appId: newApp.id };
+    } catch (error) {
+        console.error(error);
+        throw new Error("Something went wrong");
+    }
+};
+
+export const editApp = async (payload: EditAppPayload) => {
+    try {
+        const validatedFields = EditAppValidator.safeParse(payload);
+        if (!validatedFields.success) return { error: "Invalid fields" };
+
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const { id, name } = validatedFields.data;
+
+        const existingAppWithSameName = await db.app.findUnique({
+            where: {
+                userId_name: {
+                    userId: session.user.id,
+                    name
+                }
+            }
+        });
+        if (existingAppWithSameName) return { error: "App with that name already exists" };
+
+        await db.app.update({
+            where: {
+                id
+            },
+            data: {
+                name
+            }
+        });
+
+        return { success: "App updated" };
+    } catch (error) {
+        console.error(error);
+        throw new Error("Something went wrong");
+    }
+};
+
+export const deleteApp = async (payload: DeleteAppPayload) => {
+    try {
+        const validatedFields = DeleteAppValidator.safeParse(payload);
+        if (!validatedFields.success) return { error: "Invalid fields" };
+
+        const session = await auth();
+        if (!session?.user || !session.user.id) return { error: "Unauthorized" };
+
+        const { id } = validatedFields.data;
+
+        const app = await db.app.findUnique({
+            where: {
+                id
+            }
+        });
+        if (!app) return { error: "App not found" };
+        if (app.userId !== session.user.id) return { error: "Not allowed" };
+
+        await db.app.delete({
+            where: {
+                id
+            }
+        });
+
+        return { success: "App deleted" };
     } catch (error) {
         console.error(error);
         throw new Error("Something went wrong");

@@ -8,6 +8,19 @@ export const CreateAppValidator = z.object({
     })
 });
 
+export const EditAppValidator = z.object({
+    id: z.string(),
+    name: z.string().min(3, {
+        message: "Name must be at least 3 characters long"
+    }).max(30, {
+        message: "Name cannot be more than 30 characters long"
+    })
+});
+
+export const DeleteAppValidator = z.object({
+    id: z.string()
+});
+
 export const CreateApiKeyValidator = z.object({
     appId: z.string()
 });
@@ -70,6 +83,8 @@ export const BulkDeleteTestimonialsValidator = z.object({
 });
 
 export type CreateAppPayload = z.infer<typeof CreateAppValidator>;
+export type EditAppPayload = z.infer<typeof EditAppValidator>;
+export type DeleteAppPayload = z.infer<typeof DeleteAppValidator>;
 export type CreateApiKeyPayload = z.infer<typeof CreateApiKeyValidator>;
 export type CreateTestimonialPayload = z.infer<typeof CreateTestimonialValidator>;
 export type GetTestimonialsPayload = z.infer<typeof GetTestimonialsValidator>;

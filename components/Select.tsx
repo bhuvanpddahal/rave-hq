@@ -34,7 +34,7 @@ const Select = ({
     return (
         <CreatableSelect
             placeholder={placeholder}
-            className="text-sm h-10 outline-primary"
+            className="text-sm h-10"
             styles={{
                 control: (base) => ({
                     ...base,
@@ -44,6 +44,16 @@ const Select = ({
                     }
                 })
             }}
+            theme={(theme) => ({
+                ...theme,
+                colors: {
+                    ...theme.colors,
+                    primary75: "#f78145",
+                    primary50: "#fcaf88",
+                    primary25: "#fcf2ed",
+                    primary: "#f54e00"
+                }
+            })}
             value={formattedValue}
             onChange={onSelect}
             options={options}

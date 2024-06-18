@@ -87,29 +87,26 @@ const TestimonialsContent = () => {
     return (
         <>
             {testimonials && (
-                (testimonials.length > 0 && testimonials[0]) ||
-                testimonials.length === 0
-            ) && (
-                    <>
-                        <NewTestimonialButton />
-                        <Card>
-                            <CardHeader className="pb-4">
-                                <CardTitle className="text-base font-bold text-zinc-800">
-                                    All Testimonials
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <DataTable
-                                    columns={columns}
-                                    data={testimonials}
-                                    hasNextPage={hasNextPage}
-                                    fetchNextPage={fetchNextPage}
-                                    isFetchingNextPage={isFetchingNextPage}
-                                />
-                            </CardContent>
-                        </Card>
-                    </>
-                )}
+                <>
+                    <NewTestimonialButton />
+                    <Card>
+                        <CardHeader className="pb-4">
+                            <CardTitle className="text-base font-bold text-zinc-800">
+                                All Testimonials
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <DataTable
+                                columns={columns}
+                                data={testimonials}
+                                hasNextPage={hasNextPage}
+                                fetchNextPage={fetchNextPage}
+                                isFetchingNextPage={isFetchingNextPage}
+                            />
+                        </CardContent>
+                    </Card>
+                </>
+            )}
         </>
     )
 };

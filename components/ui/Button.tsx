@@ -10,7 +10,7 @@ const buttonVariants = cva(
       variant: {
         primary: "from-[#fa9c70] to-primary text-primary-foreground hover:from-primary hover:to-primary border-red-600",
         secondary: "from-[#72a9fc] to-secondary text-secondary-foreground hover:from-secondary hover:to-secondary border-blue-600",
-        outline: "from-zinc-50 to-zinc-100 text-accent-foreground hover:from-zinc-200 hover:to-zinc-200 border-zinc-300",
+        outline: "from-white to-zinc-100 text-accent-foreground hover:from-zinc-200 hover:to-zinc-200 border-zinc-300",
         ghost: "border-0 shadow-none hover:bg-accent hover:text-accent-foreground hover:shadow-sm"
       },
       size: {

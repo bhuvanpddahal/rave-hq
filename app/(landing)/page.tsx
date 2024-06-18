@@ -6,7 +6,7 @@ import PricingSection from "./PricingSection";
 import FeaturesSection from "./FeaturesSection";
 
 export const metadata = {
-    title: "Quickly setup your project with preconfigured assets using QuickCodeKit"
+    title: "Introducing the ultimate testimonial collection and management platform"
 };
 
 const LandingPage = () => {

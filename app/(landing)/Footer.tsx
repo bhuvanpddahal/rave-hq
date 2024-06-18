@@ -13,15 +13,15 @@ export const Footer = () => {
                             className="mx-auto md:mx-0"
                         >
                             <Image
-                                src="/logo.svg"
+                                src="/logo.png"
                                 alt="Logo"
                                 height={50}
                                 width={188}
-                                className="inline-block h-[40px] w-auto"
+                                className="inline-block h-[30px] sm:h-[40px] w-auto"
                             />
                         </Link>
                         <p className="mt-3 text-sm text-slate-700">
-                            QuickCodeKit is your one-stop shop for maximizing your coding efficiency and propelling your programming skills to new heights. Sign up for a free trial today and experience the difference!
+                            RaveHQ is a testimonial collection and management platform that empowers businesses to build trust and credibility, and showcase customer love to boost their conversions. Try it out now to see the difference!
                         </p>
                         <p className="mt-3 text-sm text-zinc-800/60">
                             Copyright © {(new Date()).getFullYear()} - All rights reserved

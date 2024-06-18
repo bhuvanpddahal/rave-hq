@@ -1,5 +1,5 @@
 {
-  "name": "quick_code_kit",
+  "name": "rave_hq",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -21,6 +21,8 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
+    "@react-email/components": "^0.0.19",
+    "@react-email/render": "^0.0.15",
     "@tanstack/react-query": "^5.36.0",
     "@tanstack/react-table": "^8.17.3",
     "bcryptjs": "^2.4.3",
@@ -40,6 +42,7 @@
     "react": "^18",
     "react-countup": "^6.5.3",
     "react-dom": "^18",
+    "react-email": "^2.1.4",
     "react-hook-form": "^7.51.4",
     "react-icons": "^5.2.1",
     "react-intersection-observer": "^9.10.3",

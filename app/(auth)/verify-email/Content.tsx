@@ -15,7 +15,7 @@ const VerifyEmailContent = () => {
     const user = useCurrentUser();
     const isSignedIn = user?.id && user.email;
     const searchParams = useSearchParams();
-    const userId = searchParams.get("userId");
+    const userId = searchParams?.get("userId") || "";
 
     const {
         data,
@@ -24,7 +24,7 @@ const VerifyEmailContent = () => {
         enabled: !!userId && !isSignedIn,
         queryKey: ["verify-email", { userId }],
         queryFn: async () => {
-            const payload = { userId: userId || "" };
+            const payload = { userId };
             const data = await getUserEmail(payload);
             return data;
         }

@@ -12,7 +12,7 @@ const VerifyEmailPage = () => {
             <div className="bg-white max-w-sm w-full px-6 py-8 sm:px-8 sm:py-9 rounded-sm space-y-4 shadow-sm">
                 <div className="flex items-center justify-center">
                     <Image
-                        src="/logo.svg"
+                        src="/logo.png"
                         alt="Logo"
                         height={50}
                         width={188}

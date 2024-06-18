@@ -28,11 +28,11 @@ const Sidebar = () => {
                         onClick={() => setIsOpen(false)}
                     >
                         <Image
-                            src="/logo.svg"
+                            src="/logo.png"
                             alt="Logo"
                             height={50}
                             width={188}
-                            className="h-[40px] w-auto"
+                            className="h-[30px] sm:h-[40px] w-auto"
                         />
                     </Link>
 

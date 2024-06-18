@@ -52,7 +52,7 @@ const Sidebar = ({ className }: SidebarProps) => {
         )}>
             <Link href="/">
                 <Image
-                    src="/logo.svg"
+                    src="/logo.png"
                     alt="Logo"
                     height={50}
                     width={188}

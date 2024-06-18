@@ -1,9 +1,10 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { createApp } from "@/actions/app";
 import { useToast } from "@/hooks/useToast";
-import { useQueryClient } from "@tanstack/react-query";
+import { useNewAppModal } from "./useNewAppModal";
 import { CreateAppPayload } from "@/lib/validators/app";
 
 type useCreateAppProps = {
@@ -13,6 +14,7 @@ type useCreateAppProps = {
 export const useCreateApp = (props?: useCreateAppProps) => {
     const router = useRouter();
     const { toast } = useToast();
+    const { close } = useNewAppModal();
     const queryClient = useQueryClient();
     const [isLoading, startTransition] = useTransition();
     const pushToNewAppUrl =

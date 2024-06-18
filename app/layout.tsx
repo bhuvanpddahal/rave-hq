@@ -9,8 +9,10 @@ import { Toaster } from "@/components/ui/Toaster";
 
 const hankenGrotesk = Hanken_Grotesk({ subsets: ["latin"] });
 
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL!;
+
 export const metadata: Metadata = {
-    metadataBase: new URL("https://rave-hq.vercel.app"),
+    metadataBase: new URL(baseUrl),
     keywords: [
         "rave hq",
         "rave",
@@ -24,11 +26,11 @@ export const metadata: Metadata = {
     openGraph: {
         description: "Introducing the ultimate testimonial collection and management platform",
         images: [
-            "https://rave-hq.vercel.app/logo.svg"
+            `${baseUrl}/logo.png`
         ]
     },
     icons: {
-        icon: "/logo-icon.svg"
+        icon: "/logo-icon.png"
     }
 };
 

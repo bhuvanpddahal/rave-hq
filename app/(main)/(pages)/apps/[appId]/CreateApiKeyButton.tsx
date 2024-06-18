@@ -34,7 +34,7 @@ const ApiKeyButton = ({
         onSuccess: (data) => {
             if (data.success) {
                 queryClient.invalidateQueries({
-                    queryKey: ["apps", appId, "api-key"]
+                    queryKey: ["apps", appId]
                 });
                 setApiKey(data.apiKey);
                 open();

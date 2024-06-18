@@ -1,4 +1,8 @@
 import nodemailer from "nodemailer";
+import { render } from "@react-email/render";
+
+import VerifyEmailTemplate from "./templates/verify-email";
+import APIKeyRecoveryTemplate from "./templates/api-key-recovery";
 
 export const sendVerificationEmail = async (email: string, token: string) => {
     const transporter = nodemailer.createTransport({
@@ -19,8 +23,8 @@ export const sendVerificationEmail = async (email: string, token: string) => {
         },
         to: email,
         subject: "Verify your email",
-        text: "This code expires in 10 minutes.",
-        html: `<p>This is your code: <h1>${token}</h1></p>`
+        text: `This is your verification token: ${token}`,
+        html: render(VerifyEmailTemplate({ token }))
     };
 
     await transporter.sendMail(mailOptions);
@@ -45,8 +49,8 @@ export const sendApiKeyRecoveryEmail = async (email: string, token: string) => {
         },
         to: email,
         subject: "Recover your API key",
-        text: "This code expires in 10 minutes.",
-        html: `<p>This is your API key recovery code: <h1>${token}</h1></p>`
+        text: `This is your API key recovery code: ${token}`,
+        html: render(APIKeyRecoveryTemplate({ token }))
     };
 
     await transporter.sendMail(mailOptions);

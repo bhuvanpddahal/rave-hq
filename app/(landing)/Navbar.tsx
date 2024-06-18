@@ -33,11 +33,11 @@ const Navbar = () => {
             <div className="relative max-w-7xl w-full mx-auto flex items-center justify-between">
                 <Link href="/">
                     <Image
-                        src="/logo.svg"
+                        src="/logo.png"
                         alt="Logo"
                         height={50}
                         width={188}
-                        className="h-[40px] w-auto"
+                        className="h-[30px] sm:h-[40px] w-auto"
                     />
                 </Link>
 

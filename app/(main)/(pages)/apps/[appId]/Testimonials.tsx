@@ -1,5 +1,6 @@
-import { Testimonial } from "@prisma/client";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 
 import {
     Card,
@@ -8,7 +9,6 @@ import {
     CardTitle
 } from "@/components/ui/Card";
 import { columns } from "./Columns";
-import { useToast } from "@/hooks/useToast";
 import { getAppTestimonials } from "@/actions/app";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { APP_TESTIMONIALS_PER_PAGE } from "@/constants";
@@ -18,59 +18,39 @@ interface TestimonialsProps {
     appId: string;
 }
 
-interface FetchTestimonialsProps {
-    pageParam: number;
-}
-
-interface TestimonialsData {
-    testimonials: Omit<Testimonial, "appId">[];
-    totalTestimonials: number;
-    hasNextPage: boolean;
-}
-
 const Testimonials = ({ appId }: TestimonialsProps) => {
-    const { toast } = useToast();
-
-    const fetchTestimonials = async ({ pageParam }: FetchTestimonialsProps) => {
-        const payload = { appId, page: pageParam, limit: APP_TESTIMONIALS_PER_PAGE };
-        const data = await getAppTestimonials(payload);
-        if (data.error) {
-            toast({
-                title: "Error",
-                description: "Something went wrong"
-            });
-            return {
-                testimonials: [] as Testimonial[],
-                totalTestimonials: 0,
-                hasNextPage: false
-            };
-        }
-        return data as TestimonialsData;
-    };
+    const searchParams = useSearchParams();
+    const page = Number(searchParams?.get("page") || "1");
 
     const {
         data,
-        isLoading,
-        hasNextPage,
-        fetchNextPage,
-        isFetchingNextPage
-    } = useInfiniteQuery({
-        queryKey: ["apps", appId, { for: "testimonials" }],
-        queryFn: fetchTestimonials,
-        initialPageParam: 1,
-        getNextPageParam: (lastPage, pages) => {
-            if (lastPage.hasNextPage) {
-                return pages.length + 1;
-            } else {
-                return null;
-            }
+        isLoading
+    } = useQuery({
+        queryKey: ["apps", appId, { for: "testimonials", page }],
+        queryFn: async () => {
+            const payload = { appId, page, limit: APP_TESTIMONIALS_PER_PAGE };
+            const data = await getAppTestimonials(payload);
+            return data;
         }
     });
 
-    const testimonials = data?.pages.flatMap((page) => page.testimonials);
-
-    if (!testimonials || isLoading) {
+    if (isLoading) {
         return <TestimonialsLoader />
+    }
+    if (!data || data.error) {
+        return (
+            <div className="py-20 flex flex-col items-center justify-center gap-y-2">
+                <Image
+                    src="/error.png"
+                    alt="Error"
+                    height={100}
+                    width={100}
+                />
+                <p className="text-sm font-medium text-zinc-400">
+                    {data?.error || "Something went wrong"}
+                </p>
+            </div>
+        )
     }
 
     return (
@@ -83,9 +63,11 @@ const Testimonials = ({ appId }: TestimonialsProps) => {
             <CardContent>
                 <DataTable
                     columns={columns}
-                    data={testimonials}
-                    hasNextPage={hasNextPage}
-                    isFetchingNextPage={isFetchingNextPage}
+                    data={data.testimonials || []}
+                    appId={appId}
+                    page={page}
+                    hasPreviousPage={page > 1}
+                    hasNextPage={!!data.hasNextPage}
                 />
             </CardContent>
         </Card>

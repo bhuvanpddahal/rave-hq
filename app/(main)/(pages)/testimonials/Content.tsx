@@ -1,6 +1,8 @@
 "use client";
 
-import { useInfiniteQuery } from "@tanstack/react-query";
+import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 
 import NewTestimonialButton from "./NewTestimonialButton";
 import {
@@ -9,66 +11,29 @@ import {
     CardHeader,
     CardTitle
 } from "@/components/ui/Card";
-import { useToast } from "@/hooks/useToast";
+import { columns } from "./Columns";
 import { getTestimonials } from "@/actions/app";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { TESTIMONIALS_PER_PAGE } from "@/constants";
-import { TestimonialType, columns } from "./Columns";
 import { DataTable, DataTableLoader } from "./DataTable";
 
-interface FetchTestimonialsProps {
-    pageParam: number;
-}
-
-interface TestimonialsData {
-    testimonials: TestimonialType[];
-    totalTestimonials: number;
-    hasNextPage: boolean;
-}
-
 const TestimonialsContent = () => {
-    const { toast } = useToast();
-
-    const fetchTestimonials = async ({ pageParam }: FetchTestimonialsProps) => {
-        try {
-            const payload = { page: pageParam, limit: TESTIMONIALS_PER_PAGE };
-            const data = await getTestimonials(payload);
-            return data as TestimonialsData;
-        } catch (error) {
-            toast({
-                title: "Error",
-                description: "Something went wrong"
-            });
-            return {
-                testimonials: [] as TestimonialType[],
-                totalTestimonials: 0,
-                hasNextPage: false
-            };
-        }
-    };
+    const searchParams = useSearchParams();
+    const page = Number(searchParams?.get("page") || "1");
 
     const {
         data,
-        status,
-        hasNextPage,
-        fetchNextPage,
-        isFetchingNextPage
-    } = useInfiniteQuery({
-        queryKey: ["testimonials"],
-        queryFn: fetchTestimonials,
-        initialPageParam: 1,
-        getNextPageParam: (lastPage, pages) => {
-            if (lastPage.hasNextPage) {
-                return pages.length + 1;
-            } else {
-                return null;
-            }
+        isLoading
+    } = useQuery({
+        queryKey: ["testimonials", { page }],
+        queryFn: async () => {
+            const payload = { page, limit: TESTIMONIALS_PER_PAGE };
+            const data = await getTestimonials(payload);
+            return data;
         }
     });
 
-    const testimonials = data?.pages.flatMap((page) => page.testimonials);
-
-    if (!testimonials && status === "pending") {
+    if (isLoading) {
         return (
             <>
                 <Skeleton className="bg-white h-10 w-[150px] rounded-sm" />
@@ -83,30 +48,41 @@ const TestimonialsContent = () => {
             </>
         )
     }
+    if (!data || data.error) {
+        return (
+            <div className="py-20 flex flex-col items-center justify-center gap-y-2">
+                <Image
+                    src="/error.png"
+                    alt="Error"
+                    height={100}
+                    width={100}
+                />
+                <p className="text-sm font-medium text-zinc-400">
+                    {data?.error || "Something went wrong"}
+                </p>
+            </div>
+        )
+    }
 
     return (
         <>
-            {testimonials && (
-                <>
-                    <NewTestimonialButton />
-                    <Card>
-                        <CardHeader className="pb-4">
-                            <CardTitle className="text-base font-bold text-zinc-800">
-                                All Testimonials
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <DataTable
-                                columns={columns}
-                                data={testimonials}
-                                hasNextPage={hasNextPage}
-                                fetchNextPage={fetchNextPage}
-                                isFetchingNextPage={isFetchingNextPage}
-                            />
-                        </CardContent>
-                    </Card>
-                </>
-            )}
+            <NewTestimonialButton />
+            <Card>
+                <CardHeader className="pb-4">
+                    <CardTitle className="text-base font-bold text-zinc-800">
+                        All Testimonials
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <DataTable
+                        columns={columns}
+                        data={data.testimonials || []}
+                        page={page}
+                        hasPreviousPage={page > 1}
+                        hasNextPage={!!data.hasNextPage}
+                    />
+                </CardContent>
+            </Card>
         </>
     )
 };

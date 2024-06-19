@@ -105,11 +105,11 @@ const DeleteButton = ({
                         </div>
                     </div>
                     <div
-                        title={`Overall Rating: ${overallRating}`}
+                        title={`Overall Rating: ${overallRating.toFixed(2)}`}
                         className="flex items-center justify-center gap-x-0.5"
                     >
                         <Star className="h-4 w-4 fill-orange-500 stroke-1 stroke-red-600" />
-                        {overallRating}
+                        {overallRating.toFixed(2)}
                     </div>
                 </div>
                 <DialogDescription>

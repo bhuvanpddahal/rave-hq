@@ -12,11 +12,11 @@ import {
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
-    getPaginationRowModel,
     getSortedRowModel,
     useReactTable
 } from "@tanstack/react-table";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import {
     Table,
@@ -26,38 +26,35 @@ import {
     TableHeader,
     TableRow
 } from "@/components/ui/Table";
-import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { TESTIMONIALS_PER_PAGE } from "@/constants";
 import { useDeleteTestimonialsModal } from "@/hooks/useDeleteTestimonialsModal";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[];
+    appId: string;
+    page: number;
+    hasPreviousPage: boolean;
     hasNextPage: boolean;
-    fetchNextPage?: (options?: any) => Promise<any>;
-    isFetchingNextPage: boolean;
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage
+    appId,
+    page,
+    hasPreviousPage,
+    hasNextPage
 }: DataTableProps<TData, TValue>) {
+    const router = useRouter();
     const { open, setTestimonials } = useDeleteTestimonialsModal();
     const [rowSelection, setRowSelection] = useState({});
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
         []
     );
-    const [pagination, setPagination] = useState({
-        pageIndex: 0, //initial page index
-        pageSize: TESTIMONIALS_PER_PAGE, //default page size
-    });
 
     const table = useReactTable({
         data,
@@ -65,17 +62,14 @@ export function DataTable<TData, TValue>({
         manualPagination: true,
         getCoreRowModel: getCoreRowModel(),
         onSortingChange: setSorting,
-        getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
         onRowSelectionChange: setRowSelection,
-        onPaginationChange: setPagination,
         state: {
             sorting,
             columnFilters,
-            rowSelection,
-            pagination
+            rowSelection
         }
     });
 
@@ -92,9 +86,7 @@ export function DataTable<TData, TValue>({
     };
 
     return (
-        <div className={cn(
-            isFetchingNextPage && "opacity-50 pointer-events-none"
-        )}>
+        <div>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-4">
                 <Input
                     placeholder="Filter emails..."
@@ -160,16 +152,16 @@ export function DataTable<TData, TValue>({
                 </Table>
             </div>
             <div className="flex items-center justify-end space-x-2 pt-4">
-                <Button
+            <Button
                     className="h-8 px-3"
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
+                    onClick={() => router.push(`/apps/${appId}?page=${page - 1}`)}
+                    disabled={!hasPreviousPage}
                 >
                     <ChevronFirst className="h-4 w-4" />
                 </Button>
                 <Button
                     className="h-8 px-3"
-                    onClick={fetchNextPage}
+                    onClick={() => router.push(`/apps/${appId}?page=${page + 1}`)}
                     disabled={!hasNextPage}
                 >
                     <ChevronLast className="h-4 w-4" />

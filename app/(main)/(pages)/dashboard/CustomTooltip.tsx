@@ -8,8 +8,6 @@ const CustomTooltip = ({ active, payload, text }: any) => {
     const date = payload[0].payload.date;
     const value = payload[0].value;
 
-    console.log({ payload });
-
     return (
         <div className="rounded-sm bg-white shadow-sm border overflow-hidden">
             <div className="text-sm p-2 px-3 bg-muted text-muted-foreground">
@@ -24,7 +22,10 @@ const CustomTooltip = ({ active, payload, text }: any) => {
                             {text}
                         </p>
                         <p className="text-sm text-right font-medium">
-                            {value}
+                            {text === "Overall Rating"
+                                ? value.toFixed(2)
+                                : value
+                            }
                         </p>
                     </div>
                 </div>

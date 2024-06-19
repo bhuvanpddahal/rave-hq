@@ -6,7 +6,7 @@ export const TOKEN_EXPIRY_TIME_IN_MIN = 10;
 /**
  * The number of testimonials displayed in a single page
  */
-export const TESTIMONIALS_PER_PAGE = 20;
+export const TESTIMONIALS_PER_PAGE = 12;
 
 /**
  * The number of apps displayed in a single page

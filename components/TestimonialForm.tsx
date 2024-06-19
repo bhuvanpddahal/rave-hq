@@ -1,3 +1,4 @@
+import { Star } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -14,6 +15,7 @@ import {
     CreateTestimonialPayload,
     CreateTestimonialValidator
 } from "@/lib/validators/app";
+import { cn } from "@/lib/utils";
 import { Input } from "./ui/Input";
 import { Button } from "./ui/Button";
 import { Textarea } from "./ui/Textarea";
@@ -58,7 +60,7 @@ const TestimonialForm = ({
 
     const form = useForm<CreateTestimonialPayload>({
         resolver: zodResolver(CreateTestimonialValidator),
-        defaultValues
+        defaultValues: defaultValues ?? { rating: 0 }
     });
 
     return (
@@ -112,16 +114,21 @@ const TestimonialForm = ({
                             <FormItem>
                                 <FormLabel>Rating</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        {...field}
-                                        type="number"
-                                        placeholder="5"
-                                        onChange={(e) => {
-                                            const value = e.target.value;
-                                            field.onChange(Number(value));
-                                        }}
-                                        disabled={disabled}
-                                    />
+                                    <div className={cn(
+                                        "flex justify-between",
+                                        disabled && "opacity-50 cursor-not-allowed pointer-events-none"
+                                    )}>
+                                        {Array.from({ length: 5 }, (_, index) => (
+                                            <Star
+                                                key={index}
+                                                className={cn(
+                                                    "h-7 w-7",
+                                                    field.value > index ? "text-primary fill-primary" : "text-slate-300 fill-slate-300"
+                                                )}
+                                                onClick={() => field.onChange(index + 1)}
+                                            />
+                                        ))}
+                                    </div>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

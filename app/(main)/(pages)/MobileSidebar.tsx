@@ -19,7 +19,10 @@ const MobileSidebar = () => {
                 <AlignJustify className="text-zinc-900 h-5 w-5" />
             </SheetTrigger>
             <SheetContent side="left" className="w-screen sm:max-w-sm p-0">
-                <Sidebar className="w-full" />
+                <Sidebar
+                    className="w-full"
+                    setIsOpen={setIsOpen}
+                />
             </SheetContent>
         </Sheet>
     )

@@ -9,11 +9,13 @@ import {
     FcVoicePresentation
 } from "react-icons/fc";
 import { usePathname } from "next/navigation";
+import { Dispatch, SetStateAction } from "react";
 
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
     className?: string;
+    setIsOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 const dashboardLinks = [
@@ -42,7 +44,7 @@ const profileLinks = [
     }
 ];
 
-const Sidebar = ({ className }: SidebarProps) => {
+const Sidebar = ({ className, setIsOpen }: SidebarProps) => {
     const pathname = usePathname();
 
     return (
@@ -74,6 +76,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                                         ? "bg-gradient-to-b from-secondary/60 to-secondary text-secondary-foreground hover:bg-zinc-500/80"
                                         : "hover:bg-slate-100"
                                 )}
+                                onClick={() => setIsOpen?.(false)}
                             >
                                 <link.icon className="h-6 w-6" />
                                 {link.name}
@@ -97,6 +100,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                                         ? "bg-gradient-to-b from-secondary/60 to-secondary text-secondary-foreground hover:bg-zinc-500/80"
                                         : "hover:bg-slate-100"
                                 )}
+                                onClick={() => setIsOpen?.(false)}
                             >
                                 <link.icon className="h-6 w-6" />
                                 {link.name}

@@ -98,7 +98,7 @@ const DeleteButton = ({
                         <p className="font-medium text-zinc-600">{appName}</p>
                         <div
                             title={`Total Testimonials: ${testimonialsCount}`}
-                            className="flex items-center justify-center gap-x-0.5"
+                            className="flex items-center gap-x-0.5"
                         >
                             <MessageSquareHeart className="h-4 w-4 fill-blue-400 stroke-1 stroke-blue-600" />
                             {testimonialsCount}

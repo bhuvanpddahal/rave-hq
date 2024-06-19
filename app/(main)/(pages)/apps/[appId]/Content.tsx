@@ -33,7 +33,11 @@ const AppDetailsContent = ({ appId }: AppDetailsContentProps) => {
         <div className="space-y-4 mt-[40px]">
             <div className="flex items-center justify-between">
                 <Skeleton className="bg-white h-7 w-[120px] rounded-sm" />
-                <Skeleton className="bg-white h-10 w-[150px] rounded-sm" />
+                <div className="flex gap-2">
+                    <Skeleton className="bg-white h-10 w-10 rounded-sm" />
+                    <Skeleton className="bg-white h-10 w-[42px] rounded-sm" />
+                    <Skeleton className="bg-white h-10 w-[150px] rounded-sm" />
+                </div>
             </div>
             <div className="space-y-4">
                 <OverviewLoader />

@@ -73,14 +73,14 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-4">
                 <Input
                     placeholder="Filter emails..."
                     value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
                         table.getColumn("email")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm"
+                    className="w-full sm:max-w-sm"
                 />
                 {table.getFilteredSelectedRowModel().rows.length > 0 && (
                     <Button
@@ -145,7 +145,7 @@ export const DataTableLoader = () => {
     return (
         <div>
             <div className="pb-4">
-                <Skeleton className="h-10 max-w-sm w-full rounded-sm" />
+                <Skeleton className="h-10 sm:max-w-sm w-full rounded-sm" />
             </div>
             <Skeleton className="h-[200px] w-full rounded-md" />
         </div>

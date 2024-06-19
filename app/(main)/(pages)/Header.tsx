@@ -12,7 +12,7 @@ const Header = () => {
                 <MobileSidebar />
                 <Link href="/" className="lg:hidden">
                     <Image
-                        src="/logo-icon.svg"
+                        src="/logo-icon.png"
                         alt="Logo icon"
                         height={50}
                         width={188}

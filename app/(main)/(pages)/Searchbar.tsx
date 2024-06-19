@@ -1,9 +1,16 @@
 "use client";
 
+import {
+    Home,
+    LayoutGrid,
+    MessageSquareHeart,
+    Settings,
+    ShieldCheck,
+    Smartphone
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { CircleArrowRight } from "lucide-react";
 
 import {
     CommandDialog,
@@ -17,27 +24,34 @@ import {
 const commandItems = [
     {
         name: "Apps Page",
-        href: "/apps"
+        href: "/apps",
+        icon: Smartphone
     },
     {
         name: "Dashboard Page",
-        href: "/dashboard"
+        href: "/dashboard",
+        icon: LayoutGrid
     },
     {
         name: "Home Page",
-        href: "/"
+        href: "/",
+        icon: Home
     },
     {
         name: "Settings Page",
-        href: "/settings"
+        href: "/settings",
+        icon: Settings
+
     },
     {
         name: "Sign in Page",
-        href: "/signin"
+        href: "/signin",
+        icon: ShieldCheck
     },
     {
         name: "Testimonials Page",
-        href: "/testimonials"
+        href: "/testimonials",
+        icon: MessageSquareHeart
     }
 ];
 
@@ -86,7 +100,7 @@ const Searchbar = () => {
                                 onClick={() => handleItemClick(item.href)}
                             >
                                 <CommandItem className="gap-2">
-                                    <CircleArrowRight className="size-4 text-zinc-500" />
+                                    <item.icon className="size-4 text-zinc-500" />
                                     <p>{item.name}</p>
                                 </CommandItem>
                             </div>

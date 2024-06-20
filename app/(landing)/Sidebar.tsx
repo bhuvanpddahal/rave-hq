@@ -32,7 +32,7 @@ const Sidebar = () => {
                             alt="Logo"
                             height={50}
                             width={188}
-                            className="h-[30px] sm:h-[40px] w-auto"
+                            className="h-[30px] w-auto"
                         />
                     </Link>
 
@@ -44,7 +44,7 @@ const Sidebar = () => {
                     <Separator className="my-4" />
 
                     <NavButtons
-                        className="flex flex-col gap-y-4"
+                        className="flex flex-col gap-y-3"
                         setIsOpen={setIsOpen}
                     />
                 </div>

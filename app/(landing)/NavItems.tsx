@@ -14,6 +14,10 @@ const navItems = [
     {
         name: "FAQ",
         href: "/#faq"
+    },
+    {
+        name: "Docs",
+        href: "/docs/getting-started"
     }
 ];
 

@@ -17,7 +17,7 @@ export const Footer = () => {
                                 alt="Logo"
                                 height={50}
                                 width={188}
-                                className="inline-block h-[30px] sm:h-[40px] w-auto"
+                                className="inline-block h-[30px] lg:h-[40px] w-auto"
                             />
                         </Link>
                         <p className="mt-3 text-sm text-slate-700">

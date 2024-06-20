@@ -37,7 +37,7 @@ const Navbar = () => {
                         alt="Logo"
                         height={50}
                         width={188}
-                        className="h-[30px] sm:h-[40px] w-auto"
+                        className="h-[30px] lg:h-[40px] w-auto"
                     />
                 </Link>
 

@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { FiGithub } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { SendHorizonal, Sparkle } from "lucide-react";
 
+import AnimatedTitle from "./AnimatedHeader";
 import { cn } from "@/lib/utils";
 import {
     Carousel,
@@ -85,16 +85,7 @@ const HeroSection = () => {
         <section className="bg-background">
             <div className="relative max-w-7xl mx-auto flex flex-col items-center justify-center gap-16 lg:gap-20 px-4 pt-10 lg:pt-20">
                 <div className="relative flex flex-col items-center justify-center text-center">
-                    <motion.h1
-                        initial={{ opacity: 0, translateY: "100%" }}
-                        whileInView={{ opacity: 1, translateY: "0" }}
-                        transition={{ duration: 0.5 }}
-                        className="font-black text-zinc-800 text-4xl lg:text-6xl tracking-tight"
-                    >
-                        Grow
-                        <span className="text-primary"> Trust & Credibility </span>
-                        with Authentic Testimonials
-                    </motion.h1>
+                    <AnimatedTitle />
                     <p className="text-base lg:text-lg font-semibold text-slate-600 mt-3 lg:mt-4">
                         Easily gather, manage, and showcase positive customer reviews to boost conversions.
                     </p>

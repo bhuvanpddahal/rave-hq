@@ -132,7 +132,7 @@ const HeroSection = () => {
                                         className="object-cover rounded-sm"
                                     />
                                 </div>
-                                <div className="w-full sm:w-[35%] text-zinc-100 space-y-4 sm:space-y-6">
+                                <div className="w-full sm:w-[35%] text-secondary-foreground space-y-4 sm:space-y-6">
                                     <h3 className="text-xl lg:text-2xl font-semibold">
                                         {item.title}
                                     </h3>

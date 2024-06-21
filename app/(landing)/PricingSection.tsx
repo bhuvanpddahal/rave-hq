@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { Check } from "lucide-react";
+
 import { Button } from "@/components/ui/Button";
 
 const features = [
     "Unlimited amount of app creation",
-    "Actionable insights into an app",
+    "Actionable insights into apps",
     "App API key recovery",
     "Unlimited testimonial creation"
 ];
@@ -18,8 +19,8 @@ const PricingSection = () => {
                         What&apos;s the pricing? It&apos;s
                         <span className="text-primary"> FREE</span>
                     </h1>
-                    <p className="max-w-4xl text-base lg:text-lg font-medium text-slate-800 mt-3 lg:mt-4">
-                        Turn satisfied customers into powerful brand advocates with RaveHQ, the all-in-one platform for testimonial collection and management. Learn to leverage the power of social proof.
+                    <p className="max-w-4xl text-base lg:text-lg font-medium text-slate-700 mt-3 lg:mt-4">
+                        We offer a completely free plan packed with features to help you collect, manage, and showcase glowing customer testimonials.
                     </p>
                 </div>
                 <div className="max-w-lg w-full rounded-xl shadow">
@@ -35,8 +36,8 @@ const PricingSection = () => {
                         </p>
                         <div className="absolute top-full left-1/2 -translate-x-1/2 w-[calc(100%+60px)] text-center py-3 bg-secondary rounded-tl-sm rounded-br-sm shadow">
                             <span className="font-bold text-2xl lg:text-3xl text-secondary-foreground">$0</span>
-                            <span className="absolute bottom-full right-0 border-[15px] border-transparent border-l-primary border-b-primary" />
-                            <span className="absolute top-full left-0 border-[15px] border-transparent border-t-primary border-r-primary" />
+                            <span className="absolute bottom-full right-0 border-x-[15px] border-y-[10px] border-transparent border-l-primary border-b-primary" />
+                            <span className="absolute top-full left-0 border-x-[15px] border-y-[10px] border-transparent border-t-primary border-r-primary" />
                         </div>
                     </header>
                     <div className="bg-white p-5 sm:p-7 pt-[80px] sm:pt-[88px] rounded-b-xl">

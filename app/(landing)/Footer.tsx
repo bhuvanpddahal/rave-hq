@@ -4,7 +4,7 @@ import { FcLike } from "react-icons/fc";
 
 export const Footer = () => {
     return (
-        <footer className="bg-primary-foreground border-t border-primary/80">
+        <footer className="bg-primary-foreground border-t">
             <div className="max-w-7xl mx-auto px-8 py-24">
                 <div className="flex lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
                     <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
@@ -23,7 +23,7 @@ export const Footer = () => {
                         <p className="mt-3 text-sm text-slate-700">
                             RaveHQ is a testimonial collection and management platform that empowers businesses to build trust and credibility, and showcase customer love to boost their conversions. Try it out now to see the difference!
                         </p>
-                        <p className="mt-3 text-sm text-zinc-800/60">
+                        <p className="mt-3 text-sm text-zinc-500">
                             Copyright © {(new Date()).getFullYear()} - All rights reserved
                         </p>
                     </div>
@@ -36,21 +36,24 @@ export const Footer = () => {
                                 <Link href="/" className="hover:underline">
                                     Support
                                 </Link>
-                                <Link href="/" className="hover:underline">
+                                <Link href="/#pricing" className="hover:underline">
                                     Pricing
+                                </Link>
+                                <Link href="/signin" className="hover:underline">
+                                    Signin
                                 </Link>
                             </div>
                         </div>
                         <div className="lg:w-1/3 md:w-1/2 w-full px-4">
                             <div className="font-semibold text-base-content tracking-widest text-sm md:text-left mb-3 text-zinc-800/60">
-                                LEGAL
+                                SOCIAL
                             </div>
                             <div className="flex flex-col justify-center items-center md:items-start gap-2 mb-10 text-sm">
-                                <Link href="/" className="hover:underline">
-                                    Terms of services
+                                <Link href="https://www.facebook.com" className="hover:underline">
+                                    Facebook
                                 </Link>
-                                <Link href="/" className="hover:underline">
-                                    Privacy policy
+                                <Link href="https://x.com" className="hover:underline">
+                                    X (Twitter)
                                 </Link>
                             </div>
                         </div>

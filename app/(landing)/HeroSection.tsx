@@ -6,7 +6,7 @@ import { FiGithub } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { SendHorizonal, Sparkle } from "lucide-react";
 
-import AnimatedTitle from "./AnimatedHeader";
+import AnimatedHeader from "./AnimatedHeader";
 import { cn } from "@/lib/utils";
 import {
     Carousel,
@@ -85,7 +85,7 @@ const HeroSection = () => {
         <section className="bg-background">
             <div className="relative max-w-7xl mx-auto flex flex-col items-center justify-center gap-16 lg:gap-20 px-4 pt-10 lg:pt-20">
                 <div className="relative flex flex-col items-center justify-center text-center">
-                    <AnimatedTitle />
+                    <AnimatedHeader />
                     <p className="text-base lg:text-lg font-semibold text-slate-600 mt-3 lg:mt-4">
                         Easily gather, manage, and showcase positive customer reviews to boost conversions.
                     </p>

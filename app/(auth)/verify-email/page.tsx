@@ -16,6 +16,7 @@ const VerifyEmailPage = () => {
                         alt="Logo"
                         height={50}
                         width={188}
+                        priority
                         className="h-[40px] w-auto"
                     />
                 </div>

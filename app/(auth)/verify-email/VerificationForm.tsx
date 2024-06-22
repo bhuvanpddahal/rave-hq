@@ -33,6 +33,8 @@ const VerificationForm = ({ userId }: VerificationFormProps) => {
             verifyEmail(payload).then((data) => {
                 if (data?.error) {
                     setError(data.error);
+                } else {
+                    setSuccess("Email verified successfully");
                 }
             }).catch(() => {
                 setError("Something went wrong");

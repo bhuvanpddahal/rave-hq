@@ -44,7 +44,7 @@ const NavButtons = ({
                 </>
             ) : (
                 <Link href="/signin" className={cn(buttonVariants({
-                    variant: "outline"
+                    variant: "secondary"
                 }))} onClick={closeSheet}>
                     Sign In
                 </Link>

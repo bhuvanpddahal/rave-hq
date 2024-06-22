@@ -47,13 +47,12 @@ const LogInForm = () => {
                     setSuccess(data.success);
                     if (data?.userId) {
                         router.push(`/verify-email?userId=${data.userId}`);
-                    } else {
-                        router.push("/dashboard");
                     }
                     form.reset();
-                }
-                if (data?.error) {
+                } else if (data?.error) {
                     setError(data.error);
+                } else {
+                    setSuccess("Signed in successfully");
                 }
             }).catch(() => {
                 setError("Something went wrong");

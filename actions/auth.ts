@@ -3,6 +3,7 @@
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 import { v2 as cloudinary } from "cloudinary";
+import { isRedirectError } from "next/dist/client/components/redirect";
 
 import { db } from "@/lib/db";
 import {
@@ -79,6 +80,7 @@ export const signinWithEmail = async (payload: SigninPayload) => {
             return { userId: newUser.id, success: "Verification email sent" };
         }
     } catch (error) {
+        if (isRedirectError(error)) throw error;
         console.error(error);
         if (error instanceof AuthError) {
             switch (error.type) {
@@ -129,6 +131,7 @@ export const verifyEmail = async (payload: VerifyEmailPayload) => {
             redirectTo: DEFAULT_LOGIN_REDIRECT
         });
     } catch (error) {
+        if (isRedirectError(error)) throw error;
         console.error(error);
         if (error instanceof AuthError) {
             switch (error.type) {

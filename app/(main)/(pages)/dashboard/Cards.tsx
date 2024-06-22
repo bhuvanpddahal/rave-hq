@@ -75,6 +75,8 @@ const Cards = ({
                             preserveValue
                             start={0}
                             end={overallRating}
+                            decimals={2}
+                            decimalPlaces={2}
                         />
                     </p>
                 </CardContent>

@@ -1,7 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import { Check } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/Button";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 const features = [
     "Unlimited amount of app creation",
@@ -11,6 +15,10 @@ const features = [
 ];
 
 const PricingSection = () => {
+    const router = useRouter();
+    const user = useCurrentUser();
+    const isLoggedIn = user && user.id
+
     return (
         <section id="pricing" className="bg-background">
             <div className="relative max-w-7xl mx-auto flex flex-col items-center justify-center gap-16 lg:gap-20 px-4 py-10 lg:py-20">
@@ -51,8 +59,14 @@ const PricingSection = () => {
                                 </li>
                             ))}
                         </ul>
-                        <Button className="h-11 lg:h-12 w-full mt-4">
-                            Order Now
+                        <Button
+                            className="h-11 lg:h-12 w-full mt-4"
+                            onClick={() => {
+                                if (isLoggedIn) router.push("/dashboard");
+                                else router.push("/signin");
+                            }}
+                        >
+                            Activate Free Plan
                         </Button>
                     </div>
                 </div>

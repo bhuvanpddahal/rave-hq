@@ -8,6 +8,7 @@ import {
 import {
     ColumnDef,
     ColumnFiltersState,
+    Row,
     SortingState,
     flexRender,
     getCoreRowModel,
@@ -74,7 +75,14 @@ export function DataTable<TData, TValue>({
     });
 
     const handleOpenModal = () => {
-        const rows = table.getFilteredSelectedRowModel().rows;
+        const rows = table.getFilteredSelectedRowModel().rows as (Row<TData> & {
+            original: {
+                id: string;
+                rating: number;
+                email: string;
+                feedback: string;
+            }
+        })[];
         const testimonials = rows.map((row) => ({
             id: row.original.id,
             rating: row.original.rating,
@@ -152,7 +160,7 @@ export function DataTable<TData, TValue>({
                 </Table>
             </div>
             <div className="flex items-center justify-end space-x-2 pt-4">
-            <Button
+                <Button
                     className="h-8 px-3"
                     onClick={() => router.push(`/apps/${appId}?page=${page - 1}`)}
                     disabled={!hasPreviousPage}

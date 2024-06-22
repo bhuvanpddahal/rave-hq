@@ -3,6 +3,7 @@
 import {
     ColumnDef,
     ColumnFiltersState,
+    Row,
     SortingState,
     flexRender,
     getCoreRowModel,
@@ -60,7 +61,14 @@ export function DataTable<TData, TValue>({
     });
 
     const handleOpenModal = () => {
-        const rows = table.getFilteredSelectedRowModel().rows;
+        const rows = table.getFilteredSelectedRowModel().rows as (Row<TData> & {
+            original: {
+                id: string;
+                rating: number;
+                email: string;
+                feedback: string;
+            }
+        })[];
         const testimonials = rows.map((row) => ({
             id: row.original.id,
             rating: row.original.rating,

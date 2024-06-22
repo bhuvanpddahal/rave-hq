@@ -47,7 +47,7 @@ const RecoveryForm = ({ appId }: RecoveryFormProps) => {
                 setError("Something went wrong");
             });
         });
-    }, [appId, value, router]);
+    }, [appId, value, router, queryClient]);
 
     const handleResendEmail = useCallback(() => {
         setError("");

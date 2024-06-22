@@ -40,7 +40,7 @@ const VerificationForm = ({ userId }: VerificationFormProps) => {
                 setError("Something went wrong");
             });
         });
-    }, [userId, value, router]);
+    }, [userId, value]);
 
     const handleResendEmail = useCallback(() => {
         setError("");

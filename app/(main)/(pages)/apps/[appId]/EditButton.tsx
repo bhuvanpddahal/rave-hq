@@ -80,7 +80,7 @@ const EditButton = ({
                 <DialogHeader>
                     <DialogTitle>Edit App</DialogTitle>
                     <DialogDescription>
-                        Update the app name and hit 'Save' to save it.
+                        Update the app name and hit &apos;Save&apos; to save it.
                     </DialogDescription>
                 </DialogHeader>
                 <AppForm

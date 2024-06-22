@@ -54,7 +54,7 @@ const TestimonialDetailsContent = ({
                 </div>
                 <div className="flex gap-x-1">
                     {Array.from({ length: 5 }, (_, index) => (
-                        <MdStar className="text-white h-7 w-7 animate-pulse"/>
+                        <MdStar key={index} className="text-white h-7 w-7 animate-pulse"/>
                     ))}
                 </div>
                 <div className="flex flex-col items-center gap-y-2">

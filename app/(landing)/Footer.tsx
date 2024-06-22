@@ -36,8 +36,8 @@ export const Footer = () => {
                                 <Link href="/" className="hover:underline">
                                     Support
                                 </Link>
-                                <Link href="/#pricing" className="hover:underline">
-                                    Pricing
+                                <Link href="https://github.com/BhuvanPdDahal/rave-hq" className="hover:underline">
+                                    GitHub
                                 </Link>
                                 <Link href="/signin" className="hover:underline">
                                     Signin

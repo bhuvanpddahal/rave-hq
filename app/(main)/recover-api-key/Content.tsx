@@ -15,7 +15,7 @@ const RecoverApiKeyContent = () => {
     const user = useCurrentUser();
     const isSignedIn = user?.id && user.email;
     const searchParams = useSearchParams();
-    const appId = searchParams.get("appId");
+    const appId = searchParams?.get("appId");
 
     const {
         data,

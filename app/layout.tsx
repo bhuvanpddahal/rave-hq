@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Hanken_Grotesk } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 
 import "@/styles/globals.css";
 import Modals from "@/components/Modals";
@@ -17,7 +18,9 @@ export const metadata: Metadata = {
         "rave hq",
         "rave",
         "testimonial collection platform",
-        "testimonial management platform"
+        "testimonial management platform",
+        "testimonial manager",
+        "testimonial collector"
     ],
     title: {
         default: "RaveHQ",
@@ -42,14 +45,17 @@ export default async function RootLayout({
     const session = await auth();
 
     return (
-        <html lang="en">
-            <body className={hankenGrotesk.className}>
-                <Providers session={session}>
-                    <Modals />
-                    <Toaster />
-                    {children}
-                </Providers>
-            </body>
-        </html>
+        <>
+            <html lang="en">
+                <body className={hankenGrotesk.className}>
+                    <Providers session={session}>
+                        <Modals />
+                        <Toaster />
+                        {children}
+                    </Providers>
+                </body>
+            </html>
+            <Analytics />
+        </>
     )
 }

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default {
     logo: <Image
-        src="/logo.svg"
+        src="/logo.png"
         alt="Logo"
         height={50}
         width={188}

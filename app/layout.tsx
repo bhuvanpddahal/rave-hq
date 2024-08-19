@@ -27,6 +27,7 @@ export const metadata: Metadata = {
         template: "%s - RaveHQ"
     },
     openGraph: {
+        title: "RaveHQ",
         description: "Introducing the ultimate testimonial collection and management platform",
         images: [
             `${baseUrl}/logo.png`

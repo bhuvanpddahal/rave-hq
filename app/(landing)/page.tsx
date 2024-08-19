@@ -19,7 +19,7 @@ const LandingPage = () => {
             <FAQSection />
             <Footer />
         </main>
-    )
+    );
 };
 
 export default LandingPage;

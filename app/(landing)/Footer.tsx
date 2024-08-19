@@ -40,7 +40,7 @@ export const Footer = () => {
                                     GitHub
                                 </Link>
                                 <Link href="/signin" className="hover:underline">
-                                    Signin
+                                    Sign In
                                 </Link>
                             </div>
                         </div>
